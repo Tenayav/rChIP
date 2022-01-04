@@ -1,0 +1,16 @@
+---
+title: "20220105_Challenge1"
+date: "01/05/2022"
+output: html_document
+---
+
+##Challenge #1 was to copy over the raw sequencing data from John's storage into my scratch
+##I was nervous so I did -v, which stands for verbose so that the computer would talk to me as it ran the command
+##I also selected -R, which then copied what was in each of John's files. It stands for recursive, which means it will dig into the directory, not just copy the first level of the directory. 
+
+```{BASH}
+
+cp -R -v /rinnlab/rinngrp/jori2700/rChIP_part_2/data/usftp21.novogene.com/raw_data /scratch/Shares/rinn/tenaya/rChIP/rawdata/JR2976_JR2987
+
+```
+
