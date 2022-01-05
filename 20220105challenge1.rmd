@@ -20,6 +20,9 @@ cp -R -v /rinnlab/rinngrp/jori2700/rChIP_part_2/data/usftp21.novogene.com/raw_da
 ```{BASH}
 
 du -a -b
+#alternative way
+du -sh
+#cleaner
 
 ```
 
