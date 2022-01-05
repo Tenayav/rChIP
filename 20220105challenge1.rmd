@@ -103,7 +103,7 @@ du -a -b
 11400973039	./JR2977
 98196455435	.
 
-##Thus I used most of the intro BASH commands that John wanted me to learn. 
+##Thus I used most of the intro BASH commands that John went over during our discussion together. 
 ##I didn't use mv because I didn't want to delete the original files. 
 ##Screen didn't work for me when I tried to use it during the cp command. 
 
