@@ -9,7 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(GenomicRanges)
-library(ComplexHeatmap)
+#library(ComplexHeatmap)
+#Could not install ComplexHeatmap because 'rjson' is not available. 
 source("../../util/intersect_functions.R")
 source()
 ```
