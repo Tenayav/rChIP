@@ -14,7 +14,7 @@ library(IRanges)
 #library(ComplexHeatmap)
 #Could not install ComplexHeatmap because 'rjson' is not available. 
 source("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_06_15_CTCFconditionstest/intersect_functions.R")
-
+source("../../util/encode_functions.R")
 ```
 
 # loading in gencode annotations
@@ -122,26 +122,26 @@ meyer_encode_ctcf_gr <- GRanges(seqnames = meyer_encode_ctcf$V1,
 
 # Finding overlap rates between encode biological replicates to get average overlaps between labs
 ```{r ENCODE ctcf chip overlaps}
-consensus_fl <- list.files("/scratch/Shares/rinnclass/CLASS_2022/JR/CLASS_2022/class_exeRcises/analysis/11_consensus_peaks/consensus_peaks", full.names = T)
-##can't access the rinnclass folder...I'll see if I can get the consensus peaks elsewhere...
+consensus_fl <- list.files("/consensus_peaks", full.names = T)
 # using lapply to import all the files in consensus_fl
 consensus_peaks <- lapply(consensus_fl, rtracklayer::import)
 # Stam versus all
 # ctcf_peaks <- GenomicRanges::reduce(CTCF_1, CTCF_2)
-table(countOverlaps(stam_ctcf, CTCF_10_20))
-length(stam_ctcf)
-stam_ov1 <- findOverlaps(CTCF_1, stam_ctcf)
+table(countOverlaps(stam_encode_ctcf_gr, CTCF_10_20))
+##18700 not overlapping and 27460 overlap
+length(stam_encode_ctcf_gr)
+##total peak count for stam is 46160
+stam_ov1 <- findOverlaps(CTCF_10_20, stam_encode_ctcf_gr)
+##Reporting 89% overlap between CTCF_10_20 and Stam ENCODE
 length(unique(stam_ov1@from))/length(CTCF_10_20)
-stam_ov2 <- findOverlaps(CTCF_20_60, stam_ctcf)
+stam_ov2 <- findOverlaps(CTCF_20_60, stam_encode_ctcf_gr)
 length(unique(stam_ov2@from))/length(CTCF_20_60)
+##The other side is 86% 
 # ENCODE 4 PIPELINE -- bed narrowPeak	conservative IDR thresholded peaks	1, 2
-encode_peaks <- read.table("data/encode_peaks/ENCFF769AUF.bed.gz", sep = "\t")
-bernstein_ctcf <- GRanges(seqnames = encode_peaks$V1,
-                     ranges = IRanges(start = encode_peaks$V2,
-                                      end = encode_peaks$V3))
-bernstein_stam_ov1 <- findOverlaps(stam_ctcf, bernstein_ctcf)
-length(unique(bernstein_stam_ov1@from))/length(stam_ctcf)
-source("../../util/encode_functions.R")
+bernstein_stam_ov1 <- findOverlaps(stam_encode_ctcf_gr, bernstein_encode_ctcf_gr)
+length(unique(bernstein_stam_ov1@from))/length(stam_encode_ctcf_gr)
+##Overlap between stam ENCODE and bernstein ENCODE is 80%. I'm more than that!!! 
+
 ```
 
 
