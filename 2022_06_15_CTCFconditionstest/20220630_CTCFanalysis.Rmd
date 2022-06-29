@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(GenomicRanges)
 library(rtracklayer)
+library(IRanges)
 #library(ComplexHeatmap)
 #Could not install ComplexHeatmap because 'rjson' is not available. 
 source("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_06_15_CTCFconditionstest/intersect_functions.R")
@@ -33,21 +34,21 @@ rtracklayer::export(lncrna_mrna_promoters, "/scratch/Shares/rinn/JR/rchip/data/g
 
 ```{r determining overlaps between each CTCF chip}
 # loading in CTCF new sample 1 peaks
-CTCF_1 <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/CTCF_10-20_shearing_R1_peaks.broadPeak")
+CTCF_10_20 <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/CTCF_10-20_shearing_R1_peaks.broadPeak")
 # how many peaks?
-summary(CTCF_1)
+summary(CTCF_10_20)
 # CTCF_1 has 29,365 peaks 
 # determining the width of peaks
-summary(width(CTCF_1))
+summary(width(CTCF_10_20))
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 # 199.0   297.0   395.0   476.6   543.0 15889.0 
 # loading in CTCF new sample 2 peaks
-CTCF_2 <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/CTCF_20-60_shearing_R1_peaks.broadPeak")
+CTCF_20_60 <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/CTCF_20-60_shearing_R1_peaks.broadPeak")
 # how many peaks
-summary(CTCF_2)
+summary(CTCF_20_60)
 # CTCF_2 has 34,446 peaks
 # determining the width of peaks
-summary(width(CTCF_2))
+summary(width(CTCF_20_60))
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 # 170.0   256.0   361.0   449.7   546.0 12775.0
 ```
@@ -55,12 +56,15 @@ summary(width(CTCF_2))
 
 ```{r determining overlaps between each CTCF chip}
 # finding overlaps between CTCF_1 & CTCF_2
-ov <- findOverlaps(CTCF_1, CTCF_2)
+ov <- findOverlaps(CTCF_10_20, CTCF_20_60)
+cv <- countOverlaps(CTCF_10_20, CTCF_20_60)
 # number of overlaps?
 summary(ov)
 # 26,511 overlapping peaks
 # determining the overlaps of CTCF_1 in CTCF_2
 table(table(ov@to))
+##Why choose 'to'?  And not 'from'? Looking ahead it seems like the from and to are the different perspectives from the two datasets. I guess this implies that we can only do 2 datasets at a time. 
+table(table(ov@from))
 # 26,372 of 29,365 peaks overlap from CTCF_1 to CTCF_2
 # 68 peaks had 2 overlpas and 1 peak had 3 overlaps
 percent_overlap_1 <- (26372 + (2*68) + 3) / 29365
@@ -72,8 +76,10 @@ table(table(ov@from))
 percent_overlap_2 <- (26215 + (2*146) + 3) / 34446
 # 77% of peaks overlap in CTCF_2 in CTCF_1
 # trying countoverlaps to compare
-ov_count_overlaps <- countOverlaps(CTCF_1, CTCF_2)
-table(ov_count_overlaps)
+#ov_count_overlaps <- countOverlaps(CTCF_10_20, CTCF_20_60)
+table(cv)
+
+##Here we see that 3002 do not overlap
 ```
 ### Result: there is good overlap betwen the new CTCF samples 90% for CTCF1 and 77% CTCF 2 
 
@@ -83,50 +89,51 @@ table(ov_count_overlaps)
 ```{r loading in ENCODE CTCF IDR replicate 1 and 2 merged narrow peak bed files}
 # John Stam CTCF bed narrowPeak	IDR thresholded peaks	1, 2
 # https://www.encodeproject.org/experiments/ENCSR000DWE/
-stam_encode_ctcf <- read.table("data/encode_peaks/ENCFF736NYC.bed.gz", sep = "\t")
-stam_encode_ctcf_gr <- GRanges(seqnames = encode_peaks$V1,
-                     ranges = IRanges(start = encode_peaks$V2,
-                                      end = encode_peaks$V3))
+stam_encode_ctcf <- read.table("ENCFF736NYC.bed.gz", sep = "\t")
+stam_encode_ctcf_gr <- GRanges(seqnames = stam_encode_ctcf$V1,
+                     ranges = IRanges(start = stam_encode_ctcf$V2,
+                                      end = stam_encode_ctcf$V3))
 # Bernstein CTCF bed narrowPeak	IDR thresholded peaks	1, 2
 # https://www.encodeproject.org/files/ENCFF362OPG/@@download/ENCFF362OPG.bed.gz
-bernstein_encode_ctcf <- read.table("data/encode_peaks/ENCFF362OPG.bed.gz", sep = "\t")
-bernstein_encode_ctcf <- GRanges(seqnames = encode_peaks$V1,
-                     ranges = IRanges(start = encode_peaks$V2,
-                                      end = encode_peaks$V3))
+bernstein_encode_ctcf <- read.table("ENCFF362OPG.bed.gz", sep = "\t")
+bernstein_encode_ctcf_gr <- GRanges(seqnames = bernstein_encode_ctcf$V1,
+                     ranges = IRanges(start = bernstein_encode_ctcf$V2,
+                                      end = bernstein_encode_ctcf$V3))
 # Snyder CTCF bed narrowPeak	optimal IDR thresholded peaks	1, 2
 # https://www.encodeproject.org/files/ENCFF396BZQ/@@download/ENCFF396BZQ.bed.gz
-snyder_encode_ctcf <- read.table("data/encode_peaks/ENCFF396BZQ.bed.gz", sep = "\t")
-snyder_encode_ctcf <- GRanges(seqnames = encode_peaks$V1,
-                     ranges = IRanges(start = encode_peaks$V2,
-                                      end = encode_peaks$V3))
+snyder_encode_ctcf <- read.table("ENCFF396BZQ.bed.gz", sep = "\t")
+snyder_encode_ctcf_gr <- GRanges(seqnames = snyder_encode_ctcf$V1,
+                     ranges = IRanges(start = snyder_encode_ctcf$V2,
+                                      end = snyder_encode_ctcf$V3))
 # iyer CTCF bed narrowPeak	IDR thresholded peaks	1, 2, 3
 # https://www.encodeproject.org/files/ENCFF221SKA/@@download/ENCFF221SKA.bed.gz
-iyer_encode_ctcf <- read.table("data/encode_peaks/ENCFF221SKA.bed.gz", sep = "\t")
-iyer_encode_ctcf <- GRanges(seqnames = encode_peaks$V1,
-                     ranges = IRanges(start = encode_peaks$V2,
-                                      end = encode_peaks$V3))
+iyer_encode_ctcf <- read.table("ENCFF221SKA.bed.gz", sep = "\t")
+iyer_encode_ctcf_gr <- GRanges(seqnames = iyer_encode_ctcf$V1,
+                     ranges = IRanges(start = iyer_encode_ctcf$V2,
+                                      end = iyer_encode_ctcf$V3))
 # meyers CTCF bed narrowPeak	optimal IDR thresholded peaks	1, 2
 # https://www.encodeproject.org/files/ENCFF119XFJ/@@download/ENCFF119XFJ.bed.gz
-meyer_encode_ctcf <- read.table("data/encode_peaks/ENCFF119XFJ.bed.gz", sep = "\t")
-meyer_encode_ctcf <- GRanges(seqnames = encode_peaks$V1,
-                     ranges = IRanges(start = encode_peaks$V2,
-                                      end = encode_peaks$V3))
+meyer_encode_ctcf <- read.table("ENCFF119XFJ.bed.gz", sep = "\t")
+meyer_encode_ctcf_gr <- GRanges(seqnames = meyer_encode_ctcf$V1,
+                     ranges = IRanges(start = meyer_encode_ctcf$V2,
+                                      end = meyer_encode_ctcf$V3))
 ```
 
 
 # Finding overlap rates between encode biological replicates to get average overlaps between labs
 ```{r ENCODE ctcf chip overlaps}
 consensus_fl <- list.files("/scratch/Shares/rinnclass/CLASS_2022/JR/CLASS_2022/class_exeRcises/analysis/11_consensus_peaks/consensus_peaks", full.names = T)
+##can't access the rinnclass folder...I'll see if I can get the consensus peaks elsewhere...
 # using lapply to import all the files in consensus_fl
 consensus_peaks <- lapply(consensus_fl, rtracklayer::import)
 # Stam versus all
 # ctcf_peaks <- GenomicRanges::reduce(CTCF_1, CTCF_2)
-table(countOverlaps(stam_ctcf, CTCF_1))
+table(countOverlaps(stam_ctcf, CTCF_10_20))
 length(stam_ctcf)
 stam_ov1 <- findOverlaps(CTCF_1, stam_ctcf)
-length(unique(stam_ov1@from))/length(CTCF_1)
-stam_ov2 <- findOverlaps(CTCF_2, stam_ctcf)
-length(unique(stam_ov2@from))/length(CTCF_2)
+length(unique(stam_ov1@from))/length(CTCF_10_20)
+stam_ov2 <- findOverlaps(CTCF_20_60, stam_ctcf)
+length(unique(stam_ov2@from))/length(CTCF_20_60)
 # ENCODE 4 PIPELINE -- bed narrowPeak	conservative IDR thresholded peaks	1, 2
 encode_peaks <- read.table("data/encode_peaks/ENCFF769AUF.bed.gz", sep = "\t")
 bernstein_ctcf <- GRanges(seqnames = encode_peaks$V1,
