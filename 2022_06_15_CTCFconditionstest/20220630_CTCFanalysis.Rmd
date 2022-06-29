@@ -1,0 +1,325 @@
+---
+title: "20220630_CTCFanalysis"
+author: "TV modified from JR"
+date: "6/30/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(GenomicRanges)
+library(ComplexHeatmap)
+source("../../util/intersect_functions.R")
+source()
+```
+
+# loading in gencode annotations
+```{r gencode annotations}
+# loading in gencode annotations
+gencode_gr <- rtracklayer::import("/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v32/gencode.v32.annotation.gtf")
+# creating mRNA and lncRNA promoters (3kb up and downstream)
+lncrna_mrna_promoters <- get_promoter_regions(gencode_gr, biotype = c("lncRNA", "protein_coding"))
+# export to save for later
+rtracklayer::export(lncrna_mrna_promoters, "/scratch/Shares/rinn/JR/rchip/data/gene_annotations/lncRNA_mrna_promoters.gtf")
+```
+
+
+
+# Finding overlaps between each of the CTCF datasets
+# These are two CTCF chip replicates from June 2022 from our lab in K562
+
+```{r determining overlaps between each CTCF chip}
+# loading in CTCF new sample 1 peaks
+CTCF_1 <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/CTCF_10-20_shearing_R1_peaks.broadPeak")
+# how many peaks?
+summary(CTCF_1)
+# CTCF_1 has 29,365 peaks 
+# determining the width of peaks
+summary(width(CTCF_1))
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 199.0   297.0   395.0   476.6   543.0 15889.0 
+# loading in CTCF new sample 2 peaks
+CTCF_2 <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/CTCF_20-60_shearing_R1_peaks.broadPeak")
+# how many peaks
+summary(CTCF_2)
+# CTCF_2 has 34,446 peaks
+# determining the width of peaks
+summary(width(CTCF_2))
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 170.0   256.0   361.0   449.7   546.0 12775.0
+```
+### Result: peak number and widths are pretty similar CTCF_2 (20-60) has more peaks [34,446 vs  29, 365]
+
+```{r determining overlaps between each CTCF chip}
+# finding overlaps between CTCF_1 & CTCF_2
+ov <- findOverlaps(CTCF_1, CTCF_2)
+# number of overlaps?
+summary(ov)
+# 26,511 overlapping peaks
+# determining the overlaps of CTCF_1 in CTCF_2
+table(table(ov@to))
+# 26,372 of 29,365 peaks overlap from CTCF_1 to CTCF_2
+# 68 peaks had 2 overlpas and 1 peak had 3 overlaps
+percent_overlap_1 <- (26372 + (2*68) + 3) / 29365
+# 90% overlap
+# determining the overlaps of CTCF_2 in CTCF_1
+table(table(ov@from))
+# 26,215 of 34,446 peaks overlap from CTCF_2 to CTCF_1
+# 146 peaks had 2 overlaps and 1 had 3
+percent_overlap_2 <- (26215 + (2*146) + 3) / 34446
+# 77% of peaks overlap in CTCF_2 in CTCF_1
+# trying countoverlaps to compare
+ov_count_overlaps <- countOverlaps(CTCF_1, CTCF_2)
+table(ov_count_overlaps)
+```
+### Result: there is good overlap betwen the new CTCF samples 90% for CTCF1 and 77% CTCF 2 
+
+
+
+# Loading in ENCODE CTCF peaks (replicate 1 and 2 merged from Bernstein group)
+```{r loading in ENCODE CTCF IDR replicate 1 and 2 merged narrow peak bed files}
+# John Stam CTCF bed narrowPeak	IDR thresholded peaks	1, 2
+# https://www.encodeproject.org/experiments/ENCSR000DWE/
+stam_encode_ctcf <- read.table("data/encode_peaks/ENCFF736NYC.bed.gz", sep = "\t")
+stam_encode_ctcf_gr <- GRanges(seqnames = encode_peaks$V1,
+                     ranges = IRanges(start = encode_peaks$V2,
+                                      end = encode_peaks$V3))
+# Bernstein CTCF bed narrowPeak	IDR thresholded peaks	1, 2
+# https://www.encodeproject.org/files/ENCFF362OPG/@@download/ENCFF362OPG.bed.gz
+bernstein_encode_ctcf <- read.table("data/encode_peaks/ENCFF362OPG.bed.gz", sep = "\t")
+bernstein_encode_ctcf <- GRanges(seqnames = encode_peaks$V1,
+                     ranges = IRanges(start = encode_peaks$V2,
+                                      end = encode_peaks$V3))
+# Snyder CTCF bed narrowPeak	optimal IDR thresholded peaks	1, 2
+# https://www.encodeproject.org/files/ENCFF396BZQ/@@download/ENCFF396BZQ.bed.gz
+snyder_encode_ctcf <- read.table("data/encode_peaks/ENCFF396BZQ.bed.gz", sep = "\t")
+snyder_encode_ctcf <- GRanges(seqnames = encode_peaks$V1,
+                     ranges = IRanges(start = encode_peaks$V2,
+                                      end = encode_peaks$V3))
+# iyer CTCF bed narrowPeak	IDR thresholded peaks	1, 2, 3
+# https://www.encodeproject.org/files/ENCFF221SKA/@@download/ENCFF221SKA.bed.gz
+iyer_encode_ctcf <- read.table("data/encode_peaks/ENCFF221SKA.bed.gz", sep = "\t")
+iyer_encode_ctcf <- GRanges(seqnames = encode_peaks$V1,
+                     ranges = IRanges(start = encode_peaks$V2,
+                                      end = encode_peaks$V3))
+# meyers CTCF bed narrowPeak	optimal IDR thresholded peaks	1, 2
+# https://www.encodeproject.org/files/ENCFF119XFJ/@@download/ENCFF119XFJ.bed.gz
+meyer_encode_ctcf <- read.table("data/encode_peaks/ENCFF119XFJ.bed.gz", sep = "\t")
+meyer_encode_ctcf <- GRanges(seqnames = encode_peaks$V1,
+                     ranges = IRanges(start = encode_peaks$V2,
+                                      end = encode_peaks$V3))
+```
+
+
+# Finding overlap rates between encode biological replicates to get average overlaps between labs
+```{r ENCODE ctcf chip overlaps}
+consensus_fl <- list.files("/scratch/Shares/rinnclass/CLASS_2022/JR/CLASS_2022/class_exeRcises/analysis/11_consensus_peaks/consensus_peaks", full.names = T)
+# using lapply to import all the files in consensus_fl
+consensus_peaks <- lapply(consensus_fl, rtracklayer::import)
+# Stam versus all
+# ctcf_peaks <- GenomicRanges::reduce(CTCF_1, CTCF_2)
+table(countOverlaps(stam_ctcf, CTCF_1))
+length(stam_ctcf)
+stam_ov1 <- findOverlaps(CTCF_1, stam_ctcf)
+length(unique(stam_ov1@from))/length(CTCF_1)
+stam_ov2 <- findOverlaps(CTCF_2, stam_ctcf)
+length(unique(stam_ov2@from))/length(CTCF_2)
+# ENCODE 4 PIPELINE -- bed narrowPeak	conservative IDR thresholded peaks	1, 2
+encode_peaks <- read.table("data/encode_peaks/ENCFF769AUF.bed.gz", sep = "\t")
+bernstein_ctcf <- GRanges(seqnames = encode_peaks$V1,
+                     ranges = IRanges(start = encode_peaks$V2,
+                                      end = encode_peaks$V3))
+bernstein_stam_ov1 <- findOverlaps(stam_ctcf, bernstein_ctcf)
+length(unique(bernstein_stam_ov1@from))/length(stam_ctcf)
+source("../../util/encode_functions.R")
+```
+
+
+
+# Metaplot of our 2 CTCF chip replicates
+
+```{r Metaplot of June 22 CTCF chip samples}
+# This step will accomplish two things: filter out promoters that fall outside the bounds of our coverage vectors
+# and filter out chromosomes that are not in common between the promoters object and the peak coverage object. 
+# The reason we need to do this is because the peaks may not extend to the end of each chromosome and 
+# therefore there is likely to be promoters that fall outside of the peak coverage vectors -- 
+# since we know that there are no peaks on those promoters and therefore 
+# they don't give us any extra information about where peaks are relative to promoters we'll filter them out.
+# Also, it creates problems for the Views command that we'll use to subset the coverage vectors to just the promoter windows.
+# First We will use the coverage function to interpret if there is an overlap 
+# at given entry of 6,000 entries for each base of the 'promoter window
+peak_coverage_CTCF1 <- coverage(CTCF_1)
+# This is the length of each run-length encoded vector in the peak_coverage object
+# elementNROWs can calculate coverage in RLE
+coverage_length <- elementNROWS(peak_coverage_CTCF1)
+# we can use the coverage length ranges to 
+# filter the promoters falling outside of these boundaries:
+# basically turning coverage_lenth to GRanges
+coverage_gr <- GRanges(seqnames = names(coverage_length),
+                       IRanges(start = rep(1, length(coverage_length)), 
+                               end = coverage_length))
+# importing promoter annotations in this directory
+all_promoters_gr <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/gene_annotations/lncRNA_mrna_promoters.gtf")
+# subsetByOverlaps function will find all the promoter ranges within the coverage ranges
+# If we didn't do this an error would occur if a chromosome wasn't represented
+all_promoters_gr <- subsetByOverlaps(all_promoters_gr, 
+                                  coverage_gr, 
+                                  type="within", 
+                                  ignore.strand=TRUE)
+# this is what we are intersecting:
+names(peak_coverage)
+# with
+seqnames(all_promoters_gr)
+# note we would have lossed the mitochondrial chromosome!
+chromosomes <- intersect(names(peak_coverage_CTCF1), unique(as.character(seqnames(all_promoters_gr))))
+# We can also ensure they're in the same order and contain the same chromosomes
+# by indexing with this vector
+peak_coverage_CTCF1 <- peak_coverage_CTCF1[chromosomes]
+# In order to match the list format of the peak_coverage object
+# we'll also coerce the GRanges object into an IntegerRangesList.
+# If you recall, one of the main features of GRanges object is capturing
+# the chromosome information -- when converting to an IRanges list, 
+# each chromosome will be represented by a named element in the list.
+# using base R here with 'as' a coericing function. 
+all_promoters_ir <- as(all_promoters_gr, "IntegerRangesList")[chromosomes]
+# ok so Views can store and access all the promoter vectors
+# We will end up with an index of all 'promoter windows'
+# indexing all the promter window vectors (6Kb)
+promoter_peak_view <- Views(peak_coverage_CTCF1, all_promoters_ir)
+# This performs functions on each of the vectors in view list.
+# kind of like mutate in vector space (note the matrix are ncol and 6,000 rows)
+# we will use viewApply to extract if there was a 1 or 0 in the RLE vector for an overlap.
+promoter_peak_view <- lapply(promoter_peak_view, function(x) t(viewApply(x, as.vector)))
+# We are now going to convert promoter_peak_view to a matrix
+# we will do this by rowbinding the Irange list that viewApply
+# turned into a vector.
+promoter_peak_matrix <- do.call("rbind", promoter_peak_view)
+# checking the dimensions
+dim(promoter_peak_matrix)
+# We're just going to flip one strand because we want to get them in the same orientation
+# It really wouldn't matter for a sysmetric window size but good to keep in mind the strand
+# could matter.
+minus_idx <- which(as.character(strand(all_promoters_gr)) == "-")
+# we want to flip so instead of 1:ncol we will do ncol:1 (currenlty 6,000 - 1)
+# we want position 1 - 6000
+promoter_peak_matrix[minus_idx,] <- promoter_peak_matrix[minus_idx, ncol(promoter_peak_matrix):1]
+# Now we can get rid of the rows that have no peaks.
+# now we have a matrix of only promoter windows with at least 1 base overlap with
+# a promoter region for a given DBP. 
+promoter_peak_matrix <- promoter_peak_matrix[rowSums(promoter_peak_matrix) > 0,]
+# columns = 6,000 each a base in promoter window.
+# rows = all promoter windows.
+# sum of cols (colSums) = how many peak overlaps there were at each base (cols).
+peak_sums <- colSums(promoter_peak_matrix)
+# normalization of binding events to 1 across promoter window
+# determining the density of peak coverage at each base in the promoter window
+peak_dens <- peak_sums/sum(peak_sums)
+# Create a data frame in order to plot this. 
+metaplot_df <- data.frame(x = -3e3:(3e3-1), dens = peak_dens)
+# Metaplot !
+ggplot(metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+# Nicer Meta Plot
+ggplot(metaplot_df, aes(x = x, y = dens)) + 
+  geom_vline(xintercept = 0, lty = 2) + 
+  geom_line(size = 1.5) + 
+  ggtitle("CTCF_1 Promoter Metaplot") + 
+  scale_x_continuous(breaks = c(-3000, 0, 3000),
+                     labels = c("-3kb", "TSS", "+3kb"),
+                     name = "") + 
+  ylab("Peak frequency")
+```
+
+
+# Metaplot CTCF 2
+
+```{r metaplot for CTCF 2 sample}
+# First We will use the coverage function to interpret if there is an overlap 
+# at given entry of 6,000 entries for each base of the 'promoter window
+peak_coverage_CTCF2 <- coverage(CTCF_2)
+# This is the length of each run-length encoded vector in the peak_coverage object
+# elementNROWs can calculate coverage in RLE
+coverage_length <- elementNROWS(peak_coverage_CTCF2)
+# we can use the coverage length ranges to 
+# filter the promoters falling outside of these boundaries:
+# basically turning coverage_lenth to GRanges
+coverage_gr <- GRanges(seqnames = names(coverage_length),
+                       IRanges(start = rep(1, length(coverage_length)), 
+                               end = coverage_length))
+# creating Granges of coverage vectors that overlap all lncRNA/mRNA promoters
+all_promoters_gr <- subsetByOverlaps(all_promoters_gr, 
+                                  coverage_gr, 
+                                  type="within", 
+                                  ignore.strand=TRUE)
+# intersecting the seqnames in promoters_gr and coverage names from peak files
+chromosomes <- intersect(names(peak_coverage_CTCF2), unique(as.character(seqnames(all_promoters_gr))))
+# ordering by chromosomes that overlap
+peak_coverage_CTCF2 <- peak_coverage_CTCF2[chromosomes]
+# In order to match the list format of the peak_coverage object
+# we'll also coerce the GRanges object into an IntegerRangesList.
+# If you recall, one of the main features of GRanges object is capturing
+# the chromosome information -- when converting to an IRanges list, 
+# each chromosome will be represented by a named element in the list.
+# using base R here with 'as' a coericing function. 
+all_promoters_ir <- as(all_promoters_gr, "IntegerRangesList")[chromosomes]
+# This performs functions on each of the vectors in view list.
+# kind of like mutate in vector space (note the matrix are ncol and 6,000 rows)
+# we will use viewApply to extract if there was a 1 or 0 in the RLE vector for an overlap.
+promoter_peak_view <- Views(peak_coverage_CTCF2, all_promoters_ir)
+# This performs functions on each of the vectors in view list.
+# kind of like mutate in vector space (note the matrix are ncol and 6,000 rows)
+# we will use viewApply to extract if there was a 1 or 0 in the RLE vector for an overlap.
+promoter_peak_view <- lapply(promoter_peak_view, function(x) t(viewApply(x, as.vector)))
+# We are now going to convert promoter_peak_view to a matrix
+# we will do this by rowbinding the Irange list that viewApply
+# turned into a vector.
+promoter_peak_matrix <- do.call("rbind", promoter_peak_view)
+# checking the dimensions of the matrix
+dim(promoter_peak_matrix)
+# We're just going to flip one strand because we want to get them in the same orientation
+# It really wouldn't matter for a sysmetric window size but good to keep in mind the strand
+# could matter.
+minus_idx <- which(as.character(strand(all_promoters_gr)) == "-")
+# we want to flip so instead of 1:ncol we will do ncol:1 (currenlty 6,000 - 1)
+# we want position 1 - 6000
+promoter_peak_matrix[minus_idx,] <- promoter_peak_matrix[minus_idx, ncol(promoter_peak_matrix):1]
+# Now we can get rid of the rows that have no peaks.
+# now we have a matrix of only promoter windows with at least 1 base overlap with
+# a promoter region for a given DBP. 
+promoter_peak_matrix <- promoter_peak_matrix[rowSums(promoter_peak_matrix) > 0,]
+# columns = 6,000 each a base in promoter window.
+# rows = all promoter windows.
+# sum of cols (colSums) = how many peak overlaps there were at each base (cols).
+peak_sums <- colSums(promoter_peak_matrix)
+# determining the density of peak coverage at each base in the promoter window
+peak_dens <- peak_sums/sum(peak_sums)
+# Create a data frame in order to plot this. 
+metaplot_df <- data.frame(x = -3e3:(3e3-1), dens = peak_dens)
+# Metaplot
+ggplot(metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+# Nicer metaplot
+ggplot(metaplot_df, aes(x = x, y = dens)) + 
+  geom_vline(xintercept = 0, lty = 2) + 
+  geom_line(size = 1.5) + 
+  ggtitle("CTCF_2 Promoter Metaplot") + 
+  scale_x_continuous(breaks = c(-3000, 0, 3000),
+                     labels = c("-3kb", "TSS", "+3kb"),
+                     name = "") + 
+  ylab("Peak frequency")
+```
+
+
+
+# using "encode_file_info" function to get needed information if needed 
+```{r encode_file_info function to retrieve data }
+# stam_files_df <- encode_file_info("ENCSR000DWE", file_format = "bed") %>%
+#   filter(file_format_type == "narrowPeak",
+#    output_type == "IDR thresholded peaks",
+#    genome_assembly == "GRCh38",
+#    biological_replicates == 12) %>%
+#   mutate(full_download_url = paste0("https://www.encodeproject.org", download_url))
+# system(paste0("cd data/encode_peaks wget ", stam_files_df$full_download_url))
+# # https://www.encodeproject.org/files/ENCFF736NYC/@@download/ENCFF736NYC.bed.gz
+```
