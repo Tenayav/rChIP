@@ -9,10 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(GenomicRanges)
+library(rtracklayer)
 #library(ComplexHeatmap)
 #Could not install ComplexHeatmap because 'rjson' is not available. 
-source("../../util/intersect_functions.R")
-source()
+source("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_06_15_CTCFconditionstest/intersect_functions.R")
+
 ```
 
 # loading in gencode annotations
