@@ -14,7 +14,7 @@ library(IRanges)
 #library(ComplexHeatmap)
 #Could not install ComplexHeatmap because 'rjson' is not available. 
 source("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_06_15_CTCFconditionstest/intersect_functions.R")
-source("../../util/encode_functions.R")
+#source("../../util/encode_functions.R")
 ```
 
 # loading in gencode annotations
@@ -134,13 +134,17 @@ length(stam_encode_ctcf_gr)
 stam_ov1 <- findOverlaps(CTCF_10_20, stam_encode_ctcf_gr)
 ##Reporting 89% overlap between CTCF_10_20 and Stam ENCODE
 length(unique(stam_ov1@from))/length(CTCF_10_20)
+#93.5% for the reverse
+length(unique(stam_ov1@to))/length(CTCF_10_20)
 stam_ov2 <- findOverlaps(CTCF_20_60, stam_encode_ctcf_gr)
 length(unique(stam_ov2@from))/length(CTCF_20_60)
-##The other side is 86% 
+length(unique(stam_ov2@to))/length(CTCF_20_60)
+##The other sample 20/60 is 86% and 89%
 # ENCODE 4 PIPELINE -- bed narrowPeak	conservative IDR thresholded peaks	1, 2
 bernstein_stam_ov1 <- findOverlaps(stam_encode_ctcf_gr, bernstein_encode_ctcf_gr)
 length(unique(bernstein_stam_ov1@from))/length(stam_encode_ctcf_gr)
-##Overlap between stam ENCODE and bernstein ENCODE is 80%. I'm more than that!!! 
+length(unique(bernstein_stam_ov1@to))/length(stam_encode_ctcf_gr)
+##Overlap between stam ENCODE and bernstein ENCODE is 80% and 86%. I'm more than that!!! 
 
 ```
 
