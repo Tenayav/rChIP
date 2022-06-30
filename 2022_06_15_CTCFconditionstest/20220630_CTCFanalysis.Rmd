@@ -14,7 +14,7 @@ library(IRanges)
 #library(ComplexHeatmap)
 #Could not install ComplexHeatmap because 'rjson' is not available. 
 source("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_06_15_CTCFconditionstest/intersect_functions.R")
-#source("../../util/encode_functions.R")
+source("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_06_15_CTCFconditionstest/encode_functions.R")
 ```
 
 # loading in gencode annotations
@@ -211,6 +211,8 @@ length(unique(myers_iyer_ov1))/length(iyer_encode_ctcf_gr)
 
 ```
 
+
+##Heat map of the overlaps GOAL!!
 
 
 # Metaplot of our 2 CTCF chip replicates
