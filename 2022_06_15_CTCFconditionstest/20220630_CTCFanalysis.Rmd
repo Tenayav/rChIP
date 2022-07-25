@@ -227,10 +227,10 @@ length(unique(myers_iyer_ov1))/length(iyer_encode_ctcf_gr)
 # Also, it creates problems for the Views command that we'll use to subset the coverage vectors to just the promoter windows.
 # First We will use the coverage function to interpret if there is an overlap 
 # at given entry of 6,000 entries for each base of the 'promoter window
-peak_coverage_CTCF1 <- coverage(CTCF_1)
+peak_coverage_CTCF1020 <- coverage(CTCF_10_20)
 # This is the length of each run-length encoded vector in the peak_coverage object
 # elementNROWs can calculate coverage in RLE
-coverage_length <- elementNROWS(peak_coverage_CTCF1)
+coverage_length <- elementNROWS(peak_coverage_CTCF1020)
 # we can use the coverage length ranges to 
 # filter the promoters falling outside of these boundaries:
 # basically turning coverage_lenth to GRanges
