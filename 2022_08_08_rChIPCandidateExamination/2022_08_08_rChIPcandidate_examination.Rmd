@@ -20,8 +20,8 @@ library(GenomicRanges)
 library(tidyverse)
 # library(Gviz)
 library(IRanges)
-source("../../util/intersect_functions.R")
-source("../../util/plotting_functions.R")
+source("/scratch/Shares/rinn/tenaya/util/intersect_functions.R")
+source("/scratch/Shares/rinn/tenaya/util/plotting_functions.R")
 ```
 
 First let's look at CTCF to compare the "good" vs "bad" chip
