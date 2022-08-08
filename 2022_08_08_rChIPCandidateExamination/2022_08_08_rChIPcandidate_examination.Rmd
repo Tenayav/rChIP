@@ -208,13 +208,25 @@ HDAC1_1_gr <- GRanges(HDAC1_peaks$chromosome, IRanges(HDAC1_peaks$start, HDAC1_p
 #                 ranges = IRanges(start=HDAC1_peaks$start,end=HDAC1_peaks$end))
 ```
 
+# Writing the HDAC1 peaks into a csv for Primer Examination 
+```{r}
+write.csv(HDAC1_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//HDAC1_peaks_ENCFF432KJA.csv",row.names = TRUE)
+#we want the higher qValue. so sort
+#then look at the positions in the UCSC browser
+#Narrow window
+#Get Sequence
+#Primer3 to design the primers
+#Check primers with NCBI
+#Check primers with IDT
+```
+
+
 # HDAC1 metaplot of peaks
 ```{r}
 # First we need promoters let's make them quick: (actually takes 5 min or so)
 #gencode_gr <- rtracklayer::import("/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v32/gencode.v32.annotation.gtf")
 # create promoters 
-#promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], 
-                 upstream = 1000, downstream = 1000)
+#promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], upstream = 1000, downstream = 1000)
 # making empty data frame for profile_tss to populate
 HDAC1_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
 # running profile TSS 
@@ -252,7 +264,7 @@ ggplot(hdac_tss_meta_peak_center, aes(x = meta_position, y = npeaks)) +
 #download from ENCODE:
 # wget https://www.encodeproject.org/files/ENCFF981ISM/@@download/ENCFF981ISM.bed.gz
 # reading in peaks from encode
-PHF8_peaks <- read_tsv("/scratch/Shares/rinn/JR/rchip/analysis/00_NEW_candidate_qc/data/PHF8/ENCFF981ISM.bed.gz", col_names = F)
+PHF8_peaks <- read_tsv("/scratch/Shares/rinn/tenaya/rChIP/ENCODE_downloads/ENCFF981ISM.bed.gz", col_names = F)
 # adding colnames 
 names(PHF8_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
                        'signalValue', 'pValue', 'qValue', 'peak_center')
@@ -267,6 +279,12 @@ ggplot(PHF8_metaplot_df, aes(x = x, y = dens)) +
 length(PHF8_gr)
 subsetByOverlaps(PHF8_gr, promoters)
 ```
+
+#Writing CSV for PHF8 rChIP Primer Design
+```{r}
+write.csv(PHF8_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//PHF8_peaks_ENCFF981ISM.csv",row.names = TRUE)
+```
+
 
 # Valr metaplot stuff for PHF8
 ```{r valr meta plot PHF8}
@@ -288,6 +306,8 @@ ggplot(PHF8_tss_meta_peak_center, aes(x = meta_position, y = npeaks)) +
   geom_point() +
   geom_smooth(span = 0.2)
 ```
+
+
 
 # Candidate 3 : CBX3
 
@@ -330,6 +350,11 @@ subsetByOverlaps(CBX3_gr_2, promoters)
 # for comparison
 ggplot(CBX3_metaplot_df, aes(x = x, y = dens)) + 
   geom_line(size = 1.5)
+```
+
+#Writing CSV for Cbx3 rChIP Primer Design
+```{r}
+write.csv(CBX3_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//Cbx3_peaks_ENCFF068OEJ.csv",row.names = TRUE)
 ```
 
 # Valr metaplot stuff for CBX3
@@ -448,6 +473,11 @@ nrow(rbbp5_peaks)
 subsetByOverlaps(rbbp5_gr, promoters)
 ```
 
+#Writing CSV for Rbbp5 rChIP Primer Design
+```{r}
+write.csv(rbbp5_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//Rbbp5_peaks_ENCFF666PCE.csv",row.names = TRUE)
+```
+
 
 
 
@@ -461,8 +491,6 @@ check consistency between replicates
 # TODO count # peaks and overlaps
 # could add promoter overlap?
 ```
-
-
 
 
 
