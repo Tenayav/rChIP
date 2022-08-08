@@ -36,6 +36,12 @@ First let's look at CTCF to compare the "good" vs "bad" chip
 # 
 # Width vs quality: did this and pretty flat across widths (so width doesn't influence peak sig as expected by MACS)
 # 
+# First we need promoters let's make them quick: (actually takes 5 min or so)
+gencode_gr <- rtracklayer::import("/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v32/gencode.v32.annotation.gtf")
+# create promoters 
+promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], 
+                 upstream = 1000, downstream = 1000)
+
 # CTCF good vs bad signal/quality vs overlap (not sure super relevant form prelim look)
 ctcf_peaks <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/CTCF_10-20_shearing_R1_peaks.broadPeak")
 ctcf_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
@@ -183,8 +189,8 @@ gunzip ENCFF432KJA.bed.gz
 
 # HDAC1 peaks to Granges
 ```{r import peak file}
-HDAC1_peaks <- read.table("data/HDAC1/ENCFF432KJA.bed")
-HDAC1_peaks <- read_tsv("/scratch/Shares/rinn/JR/rchip/analysis/00_NEW_candidate_qc/data/HDAC1/ENCFF432KJA.bed", col_names = F)
+#HDAC1_peaks <- read.table("/scratch/Shares/rinn/tenaya/rChIP/ENCODE_downloads/ENCFF432KJA.bed.gz")
+HDAC1_peaks <- read_tsv("/scratch/Shares/rinn/tenaya/rChIP/ENCODE_downloads/ENCFF432KJA.bed.gz", col_names = F)
 # col values are :
 # Chromosome, start, stop, name, score, strand, signalValue, pValue, qValue, peak_center
 # adding colnames 
@@ -205,9 +211,9 @@ HDAC1_1_gr <- GRanges(HDAC1_peaks$chromosome, IRanges(HDAC1_peaks$start, HDAC1_p
 # HDAC1 metaplot of peaks
 ```{r}
 # First we need promoters let's make them quick: (actually takes 5 min or so)
-gencode_gr <- rtracklayer::import("/scratch/Shares/rinnclass/CLASS_2023/data/data/genomes/gencode.v32.annotation.gtf")
+#gencode_gr <- rtracklayer::import("/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v32/gencode.v32.annotation.gtf")
 # create promoters 
-promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], 
+#promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], 
                  upstream = 1000, downstream = 1000)
 # making empty data frame for profile_tss to populate
 HDAC1_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
