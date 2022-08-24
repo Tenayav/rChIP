@@ -493,6 +493,23 @@ check consistency between replicates
 ```
 
 
+#EZH2
+```{r}
+#Go to ENCODE
+#Find a K562 ChIP experiment
+#Go to File
+#Click on the bed narrow peak
+#Right click on the download file button, copy link. 
+
+#BASH in your ENCODE downloads file
+# wget https://www.encodeproject.org/files/ENCFF804RVA/@@download/ENCFF804RVA.bed.gz
+ezh2_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/ENCODE_downloads/ENCFF804RVA.bed.gz", col_names = F)
+# adding colnames 
+names(ezh2_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+#Write into a csv
+write.csv(ezh2_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//Ezh2_peaks_ENCFF804RVA.csv",row.names = TRUE)
+```
 
 
 
