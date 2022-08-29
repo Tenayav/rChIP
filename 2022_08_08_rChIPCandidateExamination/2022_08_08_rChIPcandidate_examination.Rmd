@@ -1,6 +1,8 @@
 ---
 title: "2022_08_08_rChIPcandidate_examination"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -22,6 +24,7 @@ library(tidyverse)
 library(IRanges)
 source("/scratch/Shares/rinn/tenaya/util/intersect_functions.R")
 source("/scratch/Shares/rinn/tenaya/util/plotting_functions.R")
+library(valr)
 ```
 
 First let's look at CTCF to compare the "good" vs "bad" chip
@@ -39,8 +42,7 @@ First let's look at CTCF to compare the "good" vs "bad" chip
 # First we need promoters let's make them quick: (actually takes 5 min or so)
 gencode_gr <- rtracklayer::import("/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v32/gencode.v32.annotation.gtf")
 # create promoters 
-promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], 
-                 upstream = 1000, downstream = 1000)
+promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], upstream = 1000, downstream = 1000) 
 
 # CTCF good vs bad signal/quality vs overlap (not sure super relevant form prelim look)
 ctcf_peaks <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/CTCF_10-20_shearing_R1_peaks.broadPeak")
@@ -244,7 +246,7 @@ promoter_bed <- promoters(gencode_gr[gencode_gr$type == "gene"], upstream = 1000
   gr_to_bed() %>%
   mutate(tss = start + ((end-start)/2))
 # We're just going to take the peak center.
-HDAC1_peaks  <- read_bed("data/HDAC1/ENCFF432KJA.bed") %>%
+HDAC1_peaks  <- read_bed("/scratch/Shares/rinn/tenaya/rChIP/ENCODE_downloads/ENCFF432KJA.bed.gz") %>%
   mutate(peak_center = start + X10)
 hdac_tss_ov <- bed_intersect(HDAC1_peaks, promoter_bed) %>%
   mutate(meta_position = peak_center.x - tss.y,
@@ -293,7 +295,7 @@ write.csv(PHF8_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCa
 # tss <- promoters(gencode_gr[gencode_gr$type == "gene"], upstream = 0, downstream = 0) %>%
 #   gr_to_bed()
 # We're just going to take the peak center.
-PHF8_peaks  <- read_bed("data/PHF8/ENCFF981ISM.bed.gz") %>%
+PHF8_peaks  <- read_bed("/scratch/Shares/rinn/tenaya/rChIP/ENCODE_downloads/ENCFF981ISM.bed.gz") %>%
   mutate(peak_center = start + X10)
 PHF8_tss_ov <- bed_intersect(PHF8_peaks, promoter_bed) %>%
   mutate(meta_position = peak_center.x - tss.y,
@@ -365,10 +367,10 @@ write.csv(CBX3_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCa
 # tss <- promoters(gencode_gr[gencode_gr$type == "gene"], upstream = 0, downstream = 0) %>%
 #   gr_to_bed()
 # We're just going to take the peak center.
-CBX3_peaks  <- read_bed("data/CBX3/ENCFF068OEJ.bed.gz") %>%
+CBX3_peaks  <- read_bed("/scratch/Shares/rinn/JR/rchip/analysis/00_NEW_candidate_qc/data/CBX3/ENCFF068OEJ.bed.gz") %>%
   mutate(peak_center = start + X10)
 # Second replicate
-CBX3_peaks_2  <- read_bed("data/CBX3/ENCFF386ZWO.bed.gz") %>%
+CBX3_peaks_2  <- read_bed("/scratch/Shares/rinn/JR/rchip/analysis/00_NEW_candidate_qc/data/CBX3/ENCFF386ZWO.bed.gz") %>%
   mutate(peak_center = start + X10)
 # Tss overlap 
 CBX3_tss_ov <- bed_intersect(CBX3_peaks, promoter_bed) %>%
@@ -423,7 +425,7 @@ ggplot(combined_metaplot_profile,
   geom_vline(xintercept = 0, lty = 2) + 
   geom_line(size = 1.5) + 
   ggtitle(" Promoter Metaplot") + 
-  scale_x_continuous(breaks = c(-3000, 0, 3000),
+  scale_x_continuous(breaks = c(-1000, 0, 1000),
                      labels = c("-3kb", "TSS", "+3kb"),
                      name = "") + 
   ylab("Peak frequency") 
@@ -509,10 +511,67 @@ names(ezh2_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand',
                        'signalValue', 'pValue', 'qValue', 'peak_center')
 #Write into a csv
 write.csv(ezh2_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//Ezh2_peaks_ENCFF804RVA.csv",row.names = TRUE)
+
+# converting to Granges
+ezh2_gr <- GRanges(ezh2_peaks$chromosome, IRanges(ezh2_peaks$start, ezh2_peaks$end))
+# creating metaplot DF and running profile_tss
+ezh2_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+ezh2_metaplot_df <- profile_tss(ezh2_gr, promoters)
+# plotting
+ggplot(ezh2_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+nrow(ezh2_peaks)
+# only 750 or so peaks 
+subsetByOverlaps(ezh2_gr, promoters)
+```
+
+#KDM1A
+```{r}
+# wget https://www.encodeproject.org/files/ENCFF829FZW/@@download/ENCFF829FZW.bed.gz
+kdm1a_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/ENCODE_downloads/ENCFF829FZW.bed.gz", col_names = F)
+names(kdm1a_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+write.csv(kdm1a_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//Kdm1a_peaks_ENCFF829FZW.csv",row.names = TRUE)
+#31135 peaks as a heads up
+
+# converting to Granges
+kdm1a_gr <- GRanges(kdm1a_peaks$chromosome, IRanges(kdm1a_peaks$start, kdm1a_peaks$end))
+# creating metaplot DF and running profile_tss
+kdm1a_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+kdm1a_metaplot_df <- profile_tss(kdm1a_gr, promoters)
+# plotting
+ggplot(kdm1a_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+nrow(kdm1a_peaks)
+# only 750 or so peaks 
+subsetByOverlaps(kdm1a_gr, promoters)
+
 ```
 
 
+```{r}
+#EWSR1 ChIP
+# wget https://www.encodeproject.org/files/ENCFF924FYI/@@download/ENCFF924FYI.bed.gz
+#There is only one replicate
 
+ewsr1_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/ENCODE_downloads/ENCFF924FYI.bed.gz", col_names = F)
+names(ewsr1_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+write.csv(ewsr1_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//ewsr1_peaks_ENCFF924FYI.csv",row.names = TRUE)
+#1264 peaks as a heads up
+
+# converting to Granges
+ewsr1_gr <- GRanges(ewsr1_peaks$chromosome, IRanges(ewsr1_peaks$start, ewsr1_peaks$end))
+# creating metaplot DF and running profile_tss
+ewsr1_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+ewsr1_metaplot_df <- profile_tss(ewsr1_gr, promoters)
+# plotting
+ggplot(ewsr1_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+nrow(ewsr1_peaks)
+# only 750 or so peaks 
+subsetByOverlaps(ewsr1_gr, promoters)
+```
 
 
 
