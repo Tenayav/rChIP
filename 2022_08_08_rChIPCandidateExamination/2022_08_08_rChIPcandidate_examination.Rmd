@@ -574,7 +574,65 @@ subsetByOverlaps(ewsr1_gr, promoters)
 ```
 
 
+```{r}
+#KHSRP
+# wget https://www.encodeproject.org/files/ENCFF525XXS/@@download/ENCFF525XXS.bed.gz
+khsrp_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/ENCODE_downloads/ENCFF525XXS.bed.gz", col_names = F)
 
+names(khsrp_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+
+khsrp_gr <- GRanges(khsrp_peaks$chromosome, IRanges(khsrp_peaks$start, khsrp_peaks$end))
+# creating metaplot DF and running profile_tss
+khsrp_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+khsrp_metaplot_df <- profile_tss(khsrp_gr, promoters)
+# plotting
+ggplot(khsrp_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+
+write.csv(khsrp_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//khsrp_peaks_ENCFF525XXS.csv",row.names = TRUE)
+```
+
+
+#YYI (Suggestion from Taatjes during the retreat)
+```{r}
+# wget https://www.encodeproject.org/files/ENCFF328XKC/@@download/ENCFF328XKC.bed.gz
+#Above is Richard Meyer's
+yy1_meyer_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/ENCODE_downloads/ENCFF328XKC.bed.gz", col_names = F)
+
+names(yy1_meyer_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+
+yy1_meyer_gr <- GRanges(yy1_meyer_peaks$chromosome, IRanges(yy1_meyer_peaks$start, yy1_meyer_peaks$end))
+# creating metaplot DF and running profile_tss
+yy1_meyer_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+yy1_meyer_metaplot_df <- profile_tss(yy1_meyer_gr , promoters)
+# plotting
+ggplot(yy1_meyer_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+
+write.csv(yy1_meyer_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//yy1_meyer_peaks_ENCFF328XKC.csv",row.names = TRUE)
+
+
+#yy1 from Peggy Farnham 
+#wget https://www.encodeproject.org/files/ENCFF589PZO/@@download/ENCFF589PZO.bed.gz
+yy1_farnham_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/ENCODE_downloads/ENCFF589PZO.bed.gz", col_names = F)
+
+names(yy1_farnham_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+
+yy1_farnham_gr <- GRanges(yy1_farnham_peaks$chromosome, IRanges(yy1_farnham_peaks$start, yy1_farnham_peaks$end))
+# creating metaplot DF and running profile_tss
+yy1_farnham_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+yy1_farnham_metaplot_df <- profile_tss(yy1_farnham_gr , promoters)
+# plotting
+ggplot(yy1_farnham_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+
+write.csv(yy1_farnham_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//yy1_farnham_peaks_ENCFF589PZO.csv",row.names = TRUE)
+
+#antibody = the two used for the above ChIP experiments have been discontinued by Santa Cruz. They offer this one as a substitute. Sigh. https://www.scbt.com/p/yy1-antibody-h-10?requestFrom=search
+```
 
 
 
