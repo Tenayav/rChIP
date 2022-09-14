@@ -1,0 +1,33 @@
+---
+title: "2022_09_14_Publications_with_Rna_chromatin_graph"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(hrbrthemes)
+library(ggrepel)
+```
+
+#help from this website
+#https://r-graph-gallery.com/connected_scatterplot_ggplot2.html
+
+```{r}
+# Load dataset
+data <- read.csv("/scratch/Shares/rinn/tenaya/rChIP/rChIP/WebofScience_Publications_RNA_Chromatin.csv", header=T)
+
+select_years <- data %>% sample_frac(0.5)
+
+# Plot
+data %>%
+  tail(60) %>%
+  ggplot( aes(x=Publication.Years, y=Record.Count, label=Publication.Years)) +
+    geom_line( color="grey") +
+    geom_text_repel(data=select_years) +
+    geom_point(shape=21, color="black", fill="#69b3a2", size=1) +
+    theme_ipsum() +
+    ggtitle("Publications on RNA and Chromatin")
+```
+
