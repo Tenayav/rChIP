@@ -635,7 +635,42 @@ write.csv(yy1_farnham_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_
 ```
 
 
+##Sox2 from Zhou et al. 2016 Cell Res
+# doi: 10.1038/cr.2016.15
+#Human ES cells and NPCs
+#https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4746607/
 
+```{r}
+#Sox2 ChIP in Human ESCs 
+sox2_hESC_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/Sox2_downloads/GSM1701825_ESC_SOX2.bed.gz", col_names = F)
+
+names(sox2_hESC_peaks) <- c('chromosome', 'start', 'end')
+
+sox2_hESC_gr <- GRanges(sox2_hESC_peaks$chromosome, IRanges(sox2_hESC_peaks$start, sox2_hESC_peaks$end))
+# creating metaplot DF and running profile_tss
+sox2_hESC_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+sox2_hESC_metaplot_df <- profile_tss(sox2_hESC_gr , promoters)
+# plotting
+ggplot(sox2_hESC_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5) + ggtitle("Sox2 hESC ChIP Profile Zhou et al. 2016 Cell Res.")
+
+write.csv(sox2_hESC_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//sox2_hESC_peaks.csv",row.names = TRUE)
+
+#Sox2 ChIP in Human NPCs
+sox2_hNPC_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/Sox2_downloads/GSM1701828_NPC_SOX2.bed.gz", col_names = F)
+
+names(sox2_hNPC_peaks) <- c('chromosome', 'start', 'end')
+
+sox2_hNPC_gr <- GRanges(sox2_hNPC_peaks$chromosome, IRanges(sox2_hNPC_peaks$start, sox2_hNPC_peaks$end))
+# creating metaplot DF and running profile_tss
+sox2_hNPC_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+sox2_hNPC_metaplot_df <- profile_tss(sox2_hNPC_gr , promoters)
+# plotting
+ggplot(sox2_hNPC_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5) + ggtitle("Sox2 hNPC ChIP Profile Zhou et al. 2016 Cell Res.")
+
+write.csv(sox2_hNPC_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//sox2_hNPC_peaks.csv",row.names = TRUE)
+```
 
 
 
