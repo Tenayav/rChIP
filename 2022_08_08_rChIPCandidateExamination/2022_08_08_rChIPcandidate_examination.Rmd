@@ -670,6 +670,63 @@ ggplot(sox2_hNPC_metaplot_df, aes(x = x, y = dens)) +
   geom_line(size = 1.5) + ggtitle("Sox2 hNPC ChIP Profile Zhou et al. 2016 Cell Res.")
 
 write.csv(sox2_hNPC_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//sox2_hNPC_peaks.csv",row.names = TRUE)
+
+##Sox2 in mESCs from Liu et al. 2017 Cell Reports DOI:https://doi.org/10.1016/j.celrep.2017.04.067
+#GEO Acquisition Number GSE92846.
+
+sox2_mESC_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/Sox2_downloads/GSM2438473_EC-EA-3702-SOX2_ASYN_1.narrowPeak(1).gz", col_names = F)
+
+names(sox2_mESC_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+
+sox2_mESC_gr <- GRanges(sox2_mESC_peaks$chromosome, IRanges(sox2_mESC_peaks$start, sox2_mESC_peaks$end))
+# creating metaplot DF and running profile_tss
+sox2_mESC_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+sox2_mESC_metaplot_df <- profile_tss(sox2_mESC_gr , promoters)
+# plotting
+ggplot(sox2_mESC_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5) + ggtitle("Sox2 mESC ChIP Profile Liu et al. 2017 Cell Rep.")
+
+write.csv(sox2_mESC_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//sox2_mESC_Liu2017_peaks.csv",row.names = TRUE)
+
+##Another Sox2 in mESCs 
+##https://www.sciencedirect.com/science/article/pii/S0092867416317305?via%3Dihub#fig1
+##Chronis et al. 2017 Cell https://doi.org/10.1016/j.cell.2016.12.016
+##They also have ATAC Seq 
+
+sox2_mESC_Chronis_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/Sox2_downloads/GSM2417143_ESC_Sox2_Chronis_Cell_2017.bed.gz", col_names = F)
+
+names(sox2_mESC_Chronis_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+
+sox2_mESC_Chronis_gr <- GRanges(sox2_mESC_Chronis_peaks$chromosome, IRanges(sox2_mESC_Chronis_peaks$start, sox2_mESC_Chronis_peaks$end))
+# creating metaplot DF and running profile_tss
+sox2_mESC_Chronis_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+sox2_mESC_Chronis_metaplot_df <- profile_tss(sox2_mESC_Chronis_gr , promoters)
+# plotting
+ggplot(sox2_mESC_Chronis_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5) + ggtitle("Sox2 mESC ChIP Profile Chronis et al. 2017 Cell")
+
+write.csv(sox2_mESC_Chronis_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//sox2_mESC_Chronis2017_peaks.csv",row.names = TRUE)
+
+
+##Kim et al. 2018 Nat. Comm. Publication That Desmond really likes
+##https://doi.org/10.1038/s41467-018-04818-0
+## GEO accession number: GSE113915
+sox2_mESC_Kim_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/Sox2_downloads/GSM3123485_Sox2_WT_summits.bed.gz", col_names = F)
+
+names(sox2_mESC_Kim_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand', 
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+
+sox2_mESC_Kim_gr <- GRanges(sox2_mESC_Kim_peaks$chromosome, IRanges(sox2_mESC_Kim_peaks$start, sox2_mESC_Kim_peaks$end))
+# creating metaplot DF and running profile_tss
+sox2_mESC_Kim_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+sox2_mESC_Kim_metaplot_df <- profile_tss(sox2_mESC_Kim_gr , promoters)
+# plotting
+ggplot(sox2_mESC_Kim_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5) + ggtitle("Sox2 mESC ChIP Profile Kim et al. 2018 Nat Comm")
+
+write.csv(sox2_mESC_Kim_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//sox2_mESC_Kim2018_peaks.csv",row.names = TRUE)
 ```
 
 
