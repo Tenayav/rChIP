@@ -1,0 +1,48 @@
+---
+title: "2022_09_22_VisualizingChIPTracks_FigureMaking"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+source("https://github.com/PoisonAlien/trackplot/blob/master/R/trackplot.R?raw=true")
+library(data.table)
+source("/scratch/Shares/rinn/tenaya/rChIP/rChIP/bwtool-1.0.tar.gz")
+```
+
+```{r}
+#Path to bigWig files
+bigWigs = c("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/bigwig/CTCF_input_no_rnase_R1.bigWig")
+
+#Step-1. Extract the siganl for your loci of interst
+track_data = track_extract(bigWigs = bigWigs, loci = "chrX:131,683,080-131,850,000")
+
+#Step-1a (optional). Summarize trcks by condition
+track_data = track_summarize(summary_list = track_data, condition = c("CTCF Input"), stat = "mean")
+
+#Step-2. 
+#Basic Plot 
+track_plot(summary_list = track_data)
+
+#With gene models (by default autoamtically queries UCSC genome browser for hg19 transcripts)
+track_plot(summary_list = track_data, draw_gene_track = TRUE, build = "hg38")
+
+#With GTF file as source for gene models
+track_plot(summary_list = track_data, draw_gene_track = TRUE, gene_model = "hg38_refseq.gtf.gz", isGTF = TRUE)
+
+#Heighlight regions of interest
+
+#markregions = data.frame(
+    #chr = c("chr3", "chr3"),
+    #start = c(187743255, 187735888),
+    #end = c(187747473, 187736777),
+    #name = c("Promoter-1", "Promoter-2")
+  #)
+  
+#track_plot(
+ # summary_list = track_data,
+ # draw_gene_track = TRUE,
+ # show_ideogram = TRUE,
+ # build = "hg38",
+ # regions = markregions
+```
+
