@@ -1,0 +1,39 @@
+
+id: 'nf-core-chipseq-summary'
+description: " - this information is collected when the pipeline is started."
+section_name: 'nf-core/chipseq Workflow Summary'
+section_href: 'https://github.com/nf-core/chipseq'
+plot_type: 'html'
+data: |
+    <dl class="dl-horizontal">
+        <dt>Run Name</dt><dd><samp>festering_poitras</samp></dd>
+        <dt>Data Type</dt><dd><samp>Single-End</samp></dd>
+        <dt>Design File</dt><dd><samp>/scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/design.csv</samp></dd>
+        <dt>Genome</dt><dd><samp>Not supplied</samp></dd>
+        <dt>Fasta File</dt><dd><samp>/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/GRCh38.primary_assembly.genome.fa</samp></dd>
+        <dt>GTF File</dt><dd><samp>/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/gencode.v38.annotation.gtf</samp></dd>
+        <dt>Blacklist BED</dt><dd><samp>/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/hg38-blacklist.v2.bed</samp></dd>
+        <dt>MACS2 Genome Size</dt><dd><samp>3.2e9</samp></dd>
+        <dt>Min Consensus Reps</dt><dd><samp>1</samp></dd>
+        <dt>MACS2 Narrow Peaks</dt><dd><samp>No</samp></dd>
+        <dt>MACS2 Broad Cutoff</dt><dd><samp>0.1</samp></dd>
+        <dt>Trim R1</dt><dd><samp>0 bp</samp></dd>
+        <dt>Trim R2</dt><dd><samp>0 bp</samp></dd>
+        <dt>Trim 3' R1</dt><dd><samp>0 bp</samp></dd>
+        <dt>Trim 3' R2</dt><dd><samp>0 bp</samp></dd>
+        <dt>NextSeq Trim</dt><dd><samp>0 bp</samp></dd>
+        <dt>Fragment Size</dt><dd><samp>200 bp</samp></dd>
+        <dt>Fingerprint Bins</dt><dd><samp>500000</samp></dd>
+        <dt>Save Genome Index</dt><dd><samp>No</samp></dd>
+        <dt>Max Resources</dt><dd><samp>128 GB memory, 16 cpus, 10d time per job</samp></dd>
+        <dt>Container</dt><dd><samp>singularity - nfcore/chipseq:1.2.1</samp></dd>
+        <dt>Output Dir</dt><dd><samp>./results</samp></dd>
+        <dt>Launch Dir</dt><dd><samp>/scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm</samp></dd>
+        <dt>Working Dir</dt><dd><samp>/scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work</samp></dd>
+        <dt>Script Dir</dt><dd><samp>/Users/teva8543/.nextflow/assets/nf-core/chipseq</samp></dd>
+        <dt>User</dt><dd><samp>teva8543</samp></dd>
+        <dt>Config Profile</dt><dd><samp>singularity</samp></dd>
+        <dt>E-mail Address</dt><dd><samp>teva8543@colorado.edu</samp></dd>
+        <dt>E-mail on failure</dt><dd><samp><span style="color:#999999;">N/A</a></samp></dd>
+        <dt>MultiQC Max Size</dt><dd><samp>25 MB</samp></dd>
+    </dl>

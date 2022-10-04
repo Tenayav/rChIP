@@ -1,0 +1,64 @@
+Oct-04 14:03:46.118 [main] DEBUG nextflow.cli.Launcher - $> nextflow run nf-core/chipseq -r 1.2.1 -profile singularity --single_end --input design.csv --fasta /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/GRCh38.primary_assembly.genome.fa --gtf /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/gencode.v38.annotation.gtf --macs_gsize 3.2e9 --blacklist /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/hg38-blacklist.v2.bed --email teva8543@colorado.edu -resume -c nextflow.config
+Oct-04 14:03:46.288 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 21.10.6
+Oct-04 14:03:47.836 [main] DEBUG nextflow.scm.AssetManager - Git config: /Users/teva8543/.nextflow/assets/nf-core/chipseq/.git/config; branch: master; remote: origin; url: https://github.com/nf-core/chipseq.git
+Oct-04 14:03:47.860 [main] DEBUG nextflow.scm.AssetManager - Git config: /Users/teva8543/.nextflow/assets/nf-core/chipseq/.git/config; branch: master; remote: origin; url: https://github.com/nf-core/chipseq.git
+Oct-04 14:03:48.278 [main] INFO  nextflow.cli.CmdRun - Launching `nf-core/chipseq` [sleepy_borg] - revision: 0f487ed76d [1.2.1]
+Oct-04 14:03:48.884 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /Users/teva8543/.nextflow/assets/nf-core/chipseq/nextflow.config
+Oct-04 14:03:48.889 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/nextflow.config
+Oct-04 14:03:48.896 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/nextflow.config
+Oct-04 14:03:48.897 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/teva8543/.nextflow/assets/nf-core/chipseq/nextflow.config
+Oct-04 14:03:48.898 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/nextflow.config
+Oct-04 14:03:48.900 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/nextflow.config
+Oct-04 14:03:48.932 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `singularity`
+Oct-04 14:03:49.370 [main] DEBUG nextflow.plugin.PluginsFacade - Using Default plugins manager
+Oct-04 14:03:49.392 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Oct-04 14:03:49.395 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Oct-04 14:03:49.402 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Oct-04 14:03:49.410 [main] DEBUG nextflow.plugin.PluginsFacade - Using Default plugins manager
+Oct-04 14:03:50.115 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `singularity`
+Oct-04 14:03:50.148 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `singularity`
+Oct-04 14:03:50.161 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [cfc_dev, ifb_core, denbi_qbic, genotoul, alice, mjolnir_globe, uppmax, abims, nihbiowulf, nu_genomics, oist, sahmri, mpcdf, leicester, lugh, vsc_ugent, sage, cambridge, unibe_ibu, vai, czbiohub_aws, jax, cheaha, ccga_med, test, google, computerome, seg_globe, sanger, pasteur, test_full, eddie, medair, azurebatch, bi, hki, bigpurple, sbc_sharc, adcra, crukmi, cedars, docker, gis, eva, utd_ganymede, fgcz, conda, singularity, icr_davros, munin, rosalind, prince, hasta, hebbe, cfc, utd_sysbio, uzh, debug, genouest, cbe, ebc, ku_sund_dangpu, ccga_dx, crick, marvin, phoenix, biohpc_gen, mana, awsbatch, uct_hpc, imperial, maestro, aws_tower, binac]
+Oct-04 14:03:50.232 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; plugins-dir=/Users/teva8543/.nextflow/plugins
+Oct-04 14:03:50.235 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Oct-04 14:03:50.243 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Oct-04 14:03:50.245 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Oct-04 14:03:50.248 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Oct-04 14:03:50.262 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Oct-04 14:03:50.365 [main] DEBUG nextflow.Session - Session uuid: e722e176-b488-4853-830c-1430e722135c
+Oct-04 14:03:50.366 [main] DEBUG nextflow.Session - Run name: sleepy_borg
+Oct-04 14:03:50.368 [main] DEBUG nextflow.Session - Executor pool size: 64
+Oct-04 14:03:50.399 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 21.10.6 build 5660
+  Created: 21-12-2021 16:55 UTC (09:55 MDT)
+  System: Linux 3.10.0-1160.59.1.el7.x86_64
+  Runtime: Groovy 3.0.9 on OpenJDK 64-Bit Server VM 1.8.0_292-b10
+  Encoding: UTF-8 (UTF-8)
+  Process: 29682@fijinode-36 [10.224.32.56]
+  CPUs: 64 - Mem: 503.7 GB (443.2 GB) - Swap: 32 GB (30.9 GB)
+Oct-04 14:03:50.451 [main] DEBUG nextflow.Session - Work-dir: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work [fhgfs]
+Oct-04 14:03:50.477 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Oct-04 14:03:50.492 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Oct-04 14:03:50.640 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 65; maxThreads: 1000
+Oct-04 14:03:50.680 [main] ERROR nextflow.cli.Launcher - Unable to acquire lock on session with ID e722e176-b488-4853-830c-1430e722135c
+
+Common reasons of this error are:
+ - You are trying to resume the execution of an already running pipeline
+ - A previous execution was abruptly interrupted leaving the session open
+
+You can check what process is holding the lock file by using the following command:
+ - lsof /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/.nextflow/cache/e722e176-b488-4853-830c-1430e722135c/db/LOCK
+java.io.IOException: Unable to acquire lock on session with ID e722e176-b488-4853-830c-1430e722135c
+
+Common reasons of this error are:
+ - You are trying to resume the execution of an already running pipeline
+ - A previous execution was abruptly interrupted leaving the session open
+
+You can check what process is holding the lock file by using the following command:
+ - lsof /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/.nextflow/cache/e722e176-b488-4853-830c-1430e722135c/db/LOCK
+	at nextflow.CacheDB.openDb(CacheDB.groovy:110)
+	at nextflow.CacheDB.open(CacheDB.groovy:129)
+	at nextflow.Session.init(Session.groovy:378)
+	at nextflow.script.ScriptRunner.execute(ScriptRunner.groovy:112)
+	at nextflow.cli.CmdRun.run(CmdRun.groovy:308)
+	at nextflow.cli.Launcher.run(Launcher.groovy:480)
+	at nextflow.cli.Launcher.main(Launcher.groovy:639)

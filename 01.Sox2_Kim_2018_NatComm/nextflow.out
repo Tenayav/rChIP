@@ -1,0 +1,137 @@
+/Users/teva8543/scratch/rChIP/rChIP/01.Sox2_Kim_2018_NatComm
+fijinode-42
+Tue Oct  4 14:34:37 MDT 2022
+Lets go
+N E X T F L O W  ~  version 21.10.6
+Launching `nf-core/chipseq` [festering_poitras] - revision: 0f487ed76d [1.2.1]
+----------------------------------------------------
+                                        ,--./,-.
+        ___     __   __   __   ___     /,-._.--~'
+  |\ | |__  __ /  ` /  \ |__) |__         }  {
+  | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                        `._,._,'
+  nf-core/chipseq v1.2.1
+----------------------------------------------------
+
+Run Name            : festering_poitras
+Data Type           : Single-End
+Design File         : /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/design.csv
+Genome              : Not supplied
+Fasta File          : /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/GRCh38.primary_assembly.genome.fa
+GTF File            : /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/gencode.v38.annotation.gtf
+Blacklist BED       : /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/hg38-blacklist.v2.bed
+MACS2 Genome Size   : 3.2e9
+Min Consensus Reps  : 1
+MACS2 Narrow Peaks  : No
+MACS2 Broad Cutoff  : 0.1
+Trim R1             : 0 bp
+Trim R2             : 0 bp
+Trim 3' R1          : 0 bp
+Trim 3' R2          : 0 bp
+NextSeq Trim        : 0 bp
+Fragment Size       : 200 bp
+Fingerprint Bins    : 500000
+Save Genome Index   : No
+Max Resources       : 128 GB memory, 16 cpus, 10d time per job
+Container           : singularity - nfcore/chipseq:1.2.1
+Output Dir          : ./results
+Launch Dir          : /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm
+Working Dir         : /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work
+Script Dir          : /Users/teva8543/.nextflow/assets/nf-core/chipseq
+User                : teva8543
+Config Profile      : singularity
+E-mail Address      : teva8543@colorado.edu
+E-mail on failure   : false
+MultiQC Max Size    : 25 MB
+----------------------------------------------------
+[-        ] process > CHECK_DESIGN -
+[-        ] process > BWA_INDEX    -
+
+[-        ] process > CHECK_DESIGN       -
+[-        ] process > BWA_INDEX          -
+[-        ] process > MAKE_GENE_BED      -
+[-        ] process > MAKE_GENOME_FILTER -
+[-        ] process > FASTQC             -
+[-        ] process > TRIMGALORE         -
+[-        ] process > BWA_MEM            -
+[-        ] process > SORT_BAM           -
+[-        ] process > MERGED_BAM         -
+Pulling Singularity image docker://nfcore/chipseq:1.2.1 [cache /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity/nfcore-chipseq-1.2.1.img]
+WARN: Singularity cache directory has not been defined -- Remote image will be stored in the path: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity -- Use env variable NXF_SINGULARITY_CACHEDIR to specify a different location
+
+[-        ] process > CHECK_DESIGN         -
+[-        ] process > BWA_INDEX            -
+[-        ] process > MAKE_GENE_BED        -
+[-        ] process > MAKE_GENOME_FILTER   -
+[-        ] process > FASTQC               -
+[-        ] process > TRIMGALORE           -
+[-        ] process > BWA_MEM              -
+[-        ] process > SORT_BAM             -
+[-        ] process > MERGED_BAM           -
+[-        ] process > MERGED_BAM_FILTER    -
+[-        ] process > PRESEQ               -
+[-        ] process > PICARD_METRICS       -
+[-        ] process > BIGWIG               -
+[-        ] process > PLOTPROFILE          -
+[-        ] process > PHANTOMPEAKQUALTOOLS -
+[-        ] process > PLOTFINGERPRINT      -
+Pulling Singularity image docker://nfcore/chipseq:1.2.1 [cache /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity/nfcore-chipseq-1.2.1.img]
+WARN: Singularity cache directory has not been defined -- Remote image will be stored in the path: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity -- Use env variable NXF_SINGULARITY_CACHEDIR to specify a different location
+
+[-        ] process > CHECK_DESIGN             -
+[-        ] process > BWA_INDEX                -
+[-        ] process > MAKE_GENE_BED            -
+[-        ] process > MAKE_GENOME_FILTER       -
+[-        ] process > FASTQC                   -
+[-        ] process > TRIMGALORE               -
+[-        ] process > BWA_MEM                  -
+[-        ] process > SORT_BAM                 -
+[-        ] process > MERGED_BAM               -
+[-        ] process > MERGED_BAM_FILTER        -
+[-        ] process > PRESEQ                   -
+[-        ] process > PICARD_METRICS           -
+[-        ] process > BIGWIG                   -
+[-        ] process > PLOTPROFILE              -
+[-        ] process > PHANTOMPEAKQUALTOOLS     -
+[-        ] process > PLOTFINGERPRINT          -
+[-        ] process > MACS2                    -
+[-        ] process > MACS2_ANNOTATE           -
+[-        ] process > MACS2_QC                 -
+[-        ] process > CONSENSUS_PEAKS          -
+[-        ] process > CONSENSUS_PEAKS_ANNOTATE -
+[-        ] process > CONSENSUS_PEAKS_COUNTS   -
+[-        ] process > CONSENSUS_PEAKS_DESEQ2   -
+[-        ] process > IGV                      -
+[-        ] process > get_software_versions    -
+Pulling Singularity image docker://nfcore/chipseq:1.2.1 [cache /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity/nfcore-chipseq-1.2.1.img]
+WARN: Singularity cache directory has not been defined -- Remote image will be stored in the path: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity -- Use env variable NXF_SINGULARITY_CACHEDIR to specify a different location
+
+[-        ] process > CHECK_DESIGN             -
+[-        ] process > BWA_INDEX                -
+[-        ] process > MAKE_GENE_BED            -
+[-        ] process > MAKE_GENOME_FILTER       -
+[-        ] process > FASTQC                   -
+[-        ] process > TRIMGALORE               -
+[-        ] process > BWA_MEM                  -
+[-        ] process > SORT_BAM                 -
+[-        ] process > MERGED_BAM               -
+[-        ] process > MERGED_BAM_FILTER        -
+[-        ] process > PRESEQ                   -
+[-        ] process > PICARD_METRICS           -
+[-        ] process > BIGWIG                   -
+[-        ] process > PLOTPROFILE              -
+[-        ] process > PHANTOMPEAKQUALTOOLS     -
+[-        ] process > PLOTFINGERPRINT          -
+[-        ] process > MACS2                    -
+[-        ] process > MACS2_ANNOTATE           -
+[-        ] process > MACS2_QC                 -
+[-        ] process > CONSENSUS_PEAKS          -
+[-        ] process > CONSENSUS_PEAKS_ANNOTATE -
+[-        ] process > CONSENSUS_PEAKS_COUNTS   -
+[-        ] process > CONSENSUS_PEAKS_DESEQ2   -
+[-        ] process > IGV                      -
+[-        ] process > get_software_versions    -
+[-        ] process > MULTIQC                  -
+[-        ] process > output_documentation     -
+Pulling Singularity image docker://nfcore/chipseq:1.2.1 [cache /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity/nfcore-chipseq-1.2.1.img]
+WARN: Singularity cache directory has not been defined -- Remote image will be stored in the path: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity -- Use env variable NXF_SINGULARITY_CACHEDIR to specify a different location

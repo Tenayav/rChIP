@@ -1,0 +1,251 @@
+Oct-04 14:22:08.200 [main] DEBUG nextflow.cli.Launcher - $> nextflow run nf-core/chipseq -r 1.2.1 -profile singularity --single_end --input design.csv --fasta /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/GRCh38.primary_assembly.genome.fa --gtf /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/gencode.v38.annotation.gtf --macs_gsize 3.2e9 --blacklist /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/hg38-blacklist.v2.bed --email teva8543@colorado.edu -resume -c nextflow.config
+Oct-04 14:22:08.477 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 21.10.6
+Oct-04 14:22:11.547 [main] DEBUG nextflow.scm.AssetManager - Git config: /Users/teva8543/.nextflow/assets/nf-core/chipseq/.git/config; branch: master; remote: origin; url: https://github.com/nf-core/chipseq.git
+Oct-04 14:22:11.583 [main] DEBUG nextflow.scm.AssetManager - Git config: /Users/teva8543/.nextflow/assets/nf-core/chipseq/.git/config; branch: master; remote: origin; url: https://github.com/nf-core/chipseq.git
+Oct-04 14:22:12.165 [main] INFO  nextflow.cli.CmdRun - Launching `nf-core/chipseq` [big_hoover] - revision: 0f487ed76d [1.2.1]
+Oct-04 14:22:13.012 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /Users/teva8543/.nextflow/assets/nf-core/chipseq/nextflow.config
+Oct-04 14:22:13.018 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/nextflow.config
+Oct-04 14:22:13.028 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/nextflow.config
+Oct-04 14:22:13.031 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/teva8543/.nextflow/assets/nf-core/chipseq/nextflow.config
+Oct-04 14:22:13.033 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/nextflow.config
+Oct-04 14:22:13.035 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/nextflow.config
+Oct-04 14:22:13.088 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `singularity`
+Oct-04 14:22:13.811 [main] DEBUG nextflow.plugin.PluginsFacade - Using Default plugins manager
+Oct-04 14:22:13.837 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Oct-04 14:22:13.841 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Oct-04 14:22:13.850 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Oct-04 14:22:13.863 [main] DEBUG nextflow.plugin.PluginsFacade - Using Default plugins manager
+Oct-04 14:22:15.794 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `singularity`
+Oct-04 14:22:15.850 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `singularity`
+Oct-04 14:22:15.872 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [cfc_dev, ifb_core, denbi_qbic, genotoul, alice, mjolnir_globe, uppmax, abims, nihbiowulf, nu_genomics, oist, sahmri, mpcdf, leicester, lugh, vsc_ugent, sage, cambridge, unibe_ibu, vai, czbiohub_aws, jax, cheaha, ccga_med, test, google, computerome, seg_globe, sanger, pasteur, test_full, eddie, medair, azurebatch, bi, hki, bigpurple, sbc_sharc, adcra, crukmi, cedars, docker, gis, eva, utd_ganymede, fgcz, conda, singularity, icr_davros, munin, rosalind, prince, hasta, hebbe, cfc, utd_sysbio, uzh, debug, genouest, cbe, ebc, ku_sund_dangpu, ccga_dx, crick, marvin, phoenix, biohpc_gen, mana, awsbatch, uct_hpc, imperial, maestro, aws_tower, binac]
+Oct-04 14:22:16.005 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; plugins-dir=/Users/teva8543/.nextflow/plugins
+Oct-04 14:22:16.012 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Oct-04 14:22:16.023 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Oct-04 14:22:16.025 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Oct-04 14:22:16.030 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Oct-04 14:22:16.050 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Oct-04 14:22:16.172 [main] DEBUG nextflow.Session - Session uuid: e722e176-b488-4853-830c-1430e722135c
+Oct-04 14:22:16.173 [main] DEBUG nextflow.Session - Run name: big_hoover
+Oct-04 14:22:16.176 [main] DEBUG nextflow.Session - Executor pool size: 64
+Oct-04 14:22:16.224 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 21.10.6 build 5660
+  Created: 21-12-2021 16:55 UTC (09:55 MDT)
+  System: Linux 3.10.0-1160.59.1.el7.x86_64
+  Runtime: Groovy 3.0.9 on OpenJDK 64-Bit Server VM 1.8.0_292-b10
+  Encoding: UTF-8 (UTF-8)
+  Process: 50744@fijinode-42 [10.224.32.62]
+  CPUs: 64 - Mem: 503.7 GB (184.5 GB) - Swap: 32 GB (14.9 GB)
+Oct-04 14:22:16.296 [main] DEBUG nextflow.Session - Work-dir: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work [fhgfs]
+Oct-04 14:22:16.367 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Oct-04 14:22:16.418 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Oct-04 14:22:16.692 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 65; maxThreads: 1000
+Oct-04 14:22:17.029 [main] DEBUG nextflow.Session - Session start invoked
+Oct-04 14:22:17.042 [main] DEBUG nextflow.trace.TraceFileObserver - Flow starting -- trace file: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/results/pipeline_info/execution_trace.txt
+Oct-04 14:22:22.005 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Oct-04 14:22:22.232 [main] INFO  nextflow.Nextflow - -[2m--------------------------------------------------[0m-
+                                        [0;32m,--.[0;30m/[0;32m,-.[0m
+[0;34m        ___     __   __   __   ___     [0;32m/,-._.--~'[0m
+[0;34m  |\ | |__  __ /  ` /  \ |__) |__         [0;33m}  {[0m
+[0;34m  | \| |       \__, \__/ |  \ |___     [0;32m\`-._,-`-,[0m
+                                        [0;32m`._,._,'[0m
+[0;35m  nf-core/chipseq v1.2.1[0m
+-[2m--------------------------------------------------[0m-
+
+Oct-04 14:22:22.252 [main] INFO  nextflow.Nextflow - Run Name            : big_hoover
+Data Type           : Single-End
+Design File         : design.csv
+Genome              : Not supplied
+Fasta File          : /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/GRCh38.primary_assembly.genome.fa
+GTF File            : /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/gencode.v38.annotation.gtf
+Blacklist BED       : /scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v38/hg38-blacklist.v2.bed
+MACS2 Genome Size   : 3.2e9
+Min Consensus Reps  : 1
+MACS2 Narrow Peaks  : No
+MACS2 Broad Cutoff  : 0.1
+Trim R1             : 0 bp
+Trim R2             : 0 bp
+Trim 3' R1          : 0 bp
+Trim 3' R2          : 0 bp
+NextSeq Trim        : 0 bp
+Fragment Size       : 200 bp
+Fingerprint Bins    : 500000
+Save Genome Index   : No
+Max Resources       : 128 GB memory, 16 cpus, 10d time per job
+Container           : singularity - nfcore/chipseq:1.2.1
+Output Dir          : ./results
+Launch Dir          : /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm
+Working Dir         : /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work
+Script Dir          : /Users/teva8543/.nextflow/assets/nf-core/chipseq
+User                : teva8543
+Config Profile      : singularity
+E-mail Address      : teva8543@colorado.edu
+E-mail on failure   : false
+MultiQC Max Size    : 25 MB
+Oct-04 14:22:22.283 [main] INFO  nextflow.Nextflow - -[2m--------------------------------------------------[0m-
+Oct-04 14:22:22.442 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:22.444 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:22.472 [main] DEBUG nextflow.executor.Executor - [warm up] executor > slurm
+Oct-04 14:22:22.487 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'slurm' > capacity: 100; pollInterval: 5s; dumpInterval: 5m 
+Oct-04 14:22:22.499 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'slurm' > queue-stat-interval: 1m
+Oct-04 14:22:22.538 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 65; maxThreads: 1000
+Oct-04 14:22:22.853 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name BWA_INDEX
+Oct-04 14:22:22.856 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:22.857 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:22.870 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name MAKE_GENE_BED
+Oct-04 14:22:22.873 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:22.875 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:22.900 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:22.901 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:22.938 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name FASTQC
+Oct-04 14:22:22.940 [Actor Thread 21] DEBUG nextflow.container.SingularityCache - Singularity found local store for image=docker://nfcore/chipseq:1.2.1; path=/scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/singularity/nfcore-chipseq-1.2.1.img
+Oct-04 14:22:22.940 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:22.942 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:22.989 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name TRIMGALORE
+Oct-04 14:22:22.991 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:22.993 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:22.999 [Actor Thread 16] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/bin/gtf2bed
+Oct-04 14:22:22.999 [Actor Thread 4] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/bin/check_design.py
+Oct-04 14:22:23.030 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name BWA_MEM
+Oct-04 14:22:23.037 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.040 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.062 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name SORT_BAM
+Oct-04 14:22:23.064 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.065 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.121 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name MERGED_BAM
+Oct-04 14:22:23.127 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.128 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.158 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name MERGED_BAM_FILTER
+Oct-04 14:22:23.160 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.161 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.194 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium,error_ignore` for process with name PRESEQ
+Oct-04 14:22:23.195 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:error_ignore` matches labels `process_medium,error_ignore` for process with name PRESEQ
+Oct-04 14:22:23.197 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.198 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.219 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name PICARD_METRICS
+Oct-04 14:22:23.223 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.231 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.284 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name BIGWIG
+Oct-04 14:22:23.286 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.287 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.308 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name PLOTPROFILE
+Oct-04 14:22:23.311 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.312 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.342 [Actor Thread 16] INFO  nextflow.processor.TaskProcessor - [d9/ea471e] Cached process > MAKE_GENE_BED (gencode.v38.annotation.gtf)
+Oct-04 14:22:23.348 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name PHANTOMPEAKQUALTOOLS
+Oct-04 14:22:23.354 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.355 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.416 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process CHECK_DESIGN (design.csv) > jobId: 8680156; workDir: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/4c/f887978454fd81564d1ca12e0c82de
+Oct-04 14:22:23.431 [Task submitter] INFO  nextflow.Session - [4c/f88797] Submitted process > CHECK_DESIGN (design.csv)
+Oct-04 14:22:23.452 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name PLOTFINGERPRINT
+Oct-04 14:22:23.463 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.466 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.463 [Actor Thread 16] DEBUG n.util.BlockingThreadExecutorFactory - Thread pool name=FileTransfer; maxThreads=192; maxQueueSize=576; keepAlive=1m
+Oct-04 14:22:23.491 [Actor Thread 20] INFO  nextflow.processor.TaskProcessor - [14/0e107f] Cached process > MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)
+Oct-04 14:22:23.521 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name MACS2
+Oct-04 14:22:23.526 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.527 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.546 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name MACS2_ANNOTATE
+Oct-04 14:22:23.549 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.550 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.566 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name MACS2_QC
+Oct-04 14:22:23.572 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.574 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.594 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_long` matches labels `process_long` for process with name CONSENSUS_PEAKS
+Oct-04 14:22:23.596 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.597 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.610 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name CONSENSUS_PEAKS_ANNOTATE
+Oct-04 14:22:23.613 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.614 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.637 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name CONSENSUS_PEAKS_COUNTS
+Oct-04 14:22:23.639 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.640 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.652 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name CONSENSUS_PEAKS_DESEQ2
+Oct-04 14:22:23.653 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.655 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.678 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.678 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.689 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:get_software_versions` matches process get_software_versions
+Oct-04 14:22:23.690 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.691 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.740 [Actor Thread 76] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/bin/scrape_software_versions.py
+Oct-04 14:22:23.751 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process BWA_INDEX (GRCh38.primary_assembly.genome.fa) > jobId: 8680157; workDir: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/1a/6a80be4b5f526bc7ab593a6be5a6bf
+Oct-04 14:22:23.755 [Task submitter] INFO  nextflow.Session - [1a/6a80be] Submitted process > BWA_INDEX (GRCh38.primary_assembly.genome.fa)
+Oct-04 14:22:23.817 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.818 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.836 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Oct-04 14:22:23.837 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Oct-04 14:22:23.947 [main] DEBUG nextflow.Session - Workflow process names [dsl1]: FASTQC, output_documentation, CONSENSUS_PEAKS, MULTIQC, SORT_BAM, CONSENSUS_PEAKS_DESEQ2, PHANTOMPEAKQUALTOOLS, BWA_MEM, BIGWIG, CONSENSUS_PEAKS_COUNTS, BWA_INDEX, get_software_versions, CHECK_DESIGN, MERGED_BAM_REMOVE_ORPHAN, MAKE_GENE_BED, CONSENSUS_PEAKS_ANNOTATE, TRIMGALORE, PLOTPROFILE, MACS2_QC, PICARD_METRICS, PLOTFINGERPRINT, MERGED_BAM_FILTER, MACS2, MACS2_ANNOTATE, MERGED_BAM, IGV, PRESEQ, MAKE_GENOME_FILTER
+Oct-04 14:22:23.948 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/output.md
+Oct-04 14:22:23.952 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Oct-04 14:22:23.952 [main] DEBUG nextflow.Session - Session await
+Oct-04 14:22:23.955 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_spp_rsc_plot.png
+Oct-04 14:22:23.958 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/r_deseq2_volcano_plot.png
+Oct-04 14:22:23.961 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_samtools_stats_plot.png
+Oct-04 14:22:23.964 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_spp_strand_correlation_plot.png
+Oct-04 14:22:23.969 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_deseq2_pca_plot.png
+Oct-04 14:22:23.978 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_picard_insert_size_plot.png
+Oct-04 14:22:23.982 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/nf-core-chipseq_logo.png
+Oct-04 14:22:23.985 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_annotatePeaks_feature_percentage_plot.png
+Oct-04 14:22:23.988 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_macs2_peak_count_plot.png
+Oct-04 14:22:23.989 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_deseq2_sample_similarity_plot.png
+Oct-04 14:22:23.992 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_frip_score_plot.png
+Oct-04 14:22:23.994 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_picard_deduplication_plot.png
+Oct-04 14:22:23.996 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/r_upsetr_intersect_plot.png
+Oct-04 14:22:23.998 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_featureCounts_assignment_plot.png
+Oct-04 14:22:24.003 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/igv_screenshot.png
+Oct-04 14:22:24.005 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_cutadapt_plot.png
+Oct-04 14:22:24.007 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/r_deseq2_ma_plot.png
+Oct-04 14:22:24.012 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_deeptools_plotFingerprint_plot.png
+Oct-04 14:22:24.015 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_deeptools_plotProfile_plot.png
+Oct-04 14:22:24.018 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_spp_nsc_plot.png
+Oct-04 14:22:24.020 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/docs/images/mqc_preseq_plot.png
+Oct-04 14:22:24.023 [Actor Thread 74] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/bin/markdown_to_html.py
+Oct-04 14:22:24.030 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process get_software_versions > jobId: 8680158; workDir: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/04/27e7a88eea06927b6a876b3239d6a0
+Oct-04 14:22:24.032 [Task submitter] INFO  nextflow.Session - [04/27e7a8] Submitted process > get_software_versions
+Oct-04 14:22:24.047 [Actor Thread 74] INFO  nextflow.processor.TaskProcessor - [d4/ab980e] Cached process > output_documentation
+Oct-04 14:22:24.119 [Actor Thread 77] DEBUG nextflow.sort.BigSort - Sort completed -- entries: 1; slices: 1; internal sort time: 0.002 s; external sort time: 0.003 s; total time: 0.005 s
+Oct-04 14:22:24.121 [Actor Thread 77] DEBUG nextflow.file.FileCollector - >> temp file exists? false
+Oct-04 14:22:24.122 [Actor Thread 77] DEBUG nextflow.file.FileCollector - Missed collect-file cache -- cause: java.nio.file.NoSuchFileException: /tmp/20c77fee9ef571f683976e0c89795866.collect-file
+Oct-04 14:22:24.166 [Actor Thread 77] DEBUG nextflow.file.FileCollector - Saved collect-files list to: /tmp/20c77fee9ef571f683976e0c89795866.collect-file
+Oct-04 14:22:24.181 [Actor Thread 77] DEBUG nextflow.file.FileCollector - Deleting file collector temp dir: /tmp/nxf-450962196644290436
+Oct-04 14:22:27.563 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 8680156; id: 1; name: CHECK_DESIGN (design.csv); status: COMPLETED; exit: 1; error: -; workDir: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/4c/f887978454fd81564d1ca12e0c82de started: 1664914947520; exited: 2022-10-04T20:22:24Z; ]
+Oct-04 14:22:27.625 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'CHECK_DESIGN (design.csv)'
+
+Caused by:
+  Process `CHECK_DESIGN (design.csv)` terminated with an error exit status (1)
+
+Command executed:
+
+  check_design.py design.csv design_reads.csv design_controls.csv
+
+Command exit status:
+  1
+
+Command output:
+  ERROR: Please check design file: FastQ file has incorrect extension (has to be '.fastq.gz' or 'fq.gz') - /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/SRR7088951.fq
+  Line: 'E14_mESCs_input,1,/scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/SRR7088951.fq,,,'
+
+Command wrapper:
+  ERROR: Please check design file: FastQ file has incorrect extension (has to be '.fastq.gz' or 'fq.gz') - /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/SRR7088951.fq
+  Line: 'E14_mESCs_input,1,/scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/SRR7088951.fq,,,'
+
+Work dir:
+  /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/4c/f887978454fd81564d1ca12e0c82de
+
+Tip: view the complete command output by changing to the process work dir and entering the command `cat .command.out`
+Oct-04 14:22:27.674 [Task monitor] INFO  nextflow.Session - Execution cancelled -- Finishing pending tasks before exit
+Oct-04 14:22:27.717 [Actor Thread 77] DEBUG nextflow.util.CacheHelper - Hash asset file sha-256: /Users/teva8543/.nextflow/assets/nf-core/chipseq/bin/igv_files_to_session.py
+Oct-04 14:22:27.766 [main] DEBUG nextflow.Session - Session await > all process finished
+Oct-04 14:22:37.523 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 8680158; id: 5; name: get_software_versions; status: COMPLETED; exit: 0; error: -; workDir: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/04/27e7a88eea06927b6a876b3239d6a0 started: 1664914947854; exited: 2022-10-04T20:22:37Z; ]
+Oct-04 14:24:17.526 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 8680157; id: 2; name: BWA_INDEX (GRCh38.primary_assembly.genome.fa); status: COMPLETED; exit: 1; error: -; workDir: /scratch/Shares/rinn/tenaya/rChIP/rChIP/01.Sox2_Kim_2018_NatComm/work/1a/6a80be4b5f526bc7ab593a6be5a6bf started: 1664914947784; exited: 2022-10-04T20:24:14Z; ]
+Oct-04 14:24:17.537 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Oct-04 14:24:17.831 [main] INFO  nextflow.Nextflow - [nf-core/chipseq] Sent summary e-mail to teva8543@colorado.edu (sendmail)
+Oct-04 14:24:17.850 [main] INFO  nextflow.Nextflow - -[0;35m[nf-core/chipseq][0;31m Pipeline completed with errors[0m-
+Oct-04 14:24:17.860 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=1; failedCount=2; ignoredCount=0; cachedCount=3; pendingCount=1; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=12.1s; failedDuration=21m 57s; cachedDuration=3m 1s;loadCpus=0; loadMemory=0; peakRunning=2; peakCpus=13; peakMemory=104 GB; ]
+Oct-04 14:24:17.861 [main] DEBUG nextflow.trace.TraceFileObserver - Flow completing -- flushing trace file
+Oct-04 14:24:17.871 [main] DEBUG nextflow.trace.ReportObserver - Flow completing -- rendering html report
+Oct-04 14:24:18.004 [main] DEBUG nextflow.trace.ReportObserver - Execution report summary data:
+  [{"cpuUsage":{"mean":35.1,"min":35.1,"q1":35.1,"q2":35.1,"q3":35.1,"max":35.1,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"},"process":"MAKE_GENE_BED","mem":{"mean":3496128512,"min":3496128512,"q1":3496128512,"q2":3496128512,"q3":3496128512,"max":3496128512,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"},"memUsage":{"mean":27.13,"min":27.13,"q1":27.13,"q2":27.13,"q3":27.13,"max":27.13,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"},"timeUsage":{"mean":0.33,"min":0.33,"q1":0.33,"q2":0.33,"q3":0.33,"max":0.33,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"},"vmem":{"mean":3507007488,"min":3507007488,"q1":3507007488,"q2":3507007488,"q3":3507007488,"max":3507007488,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"},"reads":{"mean":1456352411,"min":1456352411,"q1":1456352411,"q2":1456352411,"q3":1456352411,"max":1456352411,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"},"cpu":{"mean":70.2,"min":70.2,"q1":70.2,"q2":70.2,"q3":70.2,"max":70.2,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"},"time":{"mean":70482,"min":70482,"q1":70482,"q2":70482,"q3":70482,"max":70482,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"},"writes":{"mean":29916952,"min":29916952,"q1":29916952,"q2":29916952,"q3":29916952,"max":29916952,"minLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","maxLabel":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q1Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q2Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)","q3Label":"MAKE_GENE_BED (gencode.v38.annotation.gtf)"}},{"cpuUsage":{"mean":59.8,"min":59.8,"q1":59.8,"q2":59.8,"q3":59.8,"max":59.8,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"},"process":"MAKE_GENOME_FILTER","mem":{"mean":2990080,"min":2990080,"q1":2990080,"q2":2990080,"q3":2990080,"max":2990080,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"},"memUsage":{"mean":0.01,"min":0.01,"q1":0.01,"q2":0.01,"q3":0.01,"max":0.01,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"},"timeUsage":{"mean":0.27,"min":0.27,"q1":0.27,"q2":0.27,"q3":0.27,"max":0.27,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"},"vmem":{"mean":12120064,"min":12120064,"q1":12120064,"q2":12120064,"q3":12120064,"max":12120064,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"},"reads":{"mean":3151573787,"min":3151573787,"q1":3151573787,"q2":3151573787,"q3":3151573787,"max":3151573787,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"},"cpu":{"mean":59.8,"min":59.8,"q1":59.8,"q2":59.8,"q3":59.8,"max":59.8,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"},"time":{"mean":38902,"min":38902,"q1":38902,"q2":38902,"q3":38902,"max":38902,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"},"writes":{"mean":55177,"min":55177,"q1":55177,"q2":55177,"q3":55177,"max":55177,"minLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","maxLabel":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q1Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q2Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)","q3Label":"MAKE_GENOME_FILTER (GRCh38.primary_assembly.genome.fa)"}},{"cpuUsage":{"mean":62.1,"min":62.1,"q1":62.1,"q2":62.1,"q3":62.1,"max":62.1,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"},"process":"output_documentation","mem":{"mean":36384768,"min":36384768,"q1":36384768,"q2":36384768,"q3":36384768,"max":36384768,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"},"memUsage":{"mean":0.11,"min":0.11,"q1":0.11,"q2":0.11,"q3":0.11,"max":0.11,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"},"timeUsage":{"mean":0.01,"min":0.01,"q1":0.01,"q2":0.01,"q3":0.01,"max":0.01,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"},"vmem":{"mean":49467392,"min":49467392,"q1":49467392,"q2":49467392,"q3":49467392,"max":49467392,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"},"reads":{"mean":6396740,"min":6396740,"q1":6396740,"q2":6396740,"q3":6396740,"max":6396740,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"},"cpu":{"mean":62.1,"min":62.1,"q1":62.1,"q2":62.1,"q3":62.1,"max":62.1,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"},"time":{"mean":1568,"min":1568,"q1":1568,"q2":1568,"q3":1568,"max":1568,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"},"writes":{"mean":1288343,"min":1288343,"q1":1288343,"q2":1288343,"q3":1288343,"max":1288343,"minLabel":"output_documentation","maxLabel":"output_documentation","q1Label":"output_documentation","q2Label":"output_documentation","q3Label":"output_documentation"}},{"cpuUsage":null,"process":"CHECK_DESIGN","mem":null,"memUsage":null,"timeUsage":null,"vmem":null,"reads":null,"cpu":null,"time":{"mean":40,"min":40,"q1":40,"q2":40,"q3":40,"max":40,"minLabel":"CHECK_DESIGN (design.csv)","maxLabel":"CHECK_DESIGN (design.csv)","q1Label":"CHECK_DESIGN (design.csv)","q2Label":"CHECK_DESIGN (design.csv)","q3Label":"CHECK_DESIGN (design.csv)"},"writes":null},{"cpuUsage":{"mean":180.7,"min":180.7,"q1":180.7,"q2":180.7,"q3":180.7,"max":180.7,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"process":"get_software_versions","mem":{"mean":148377600,"min":148377600,"q1":148377600,"q2":148377600,"q3":148377600,"max":148377600,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"memUsage":{"mean":0.43,"min":0.43,"q1":0.43,"q2":0.43,"q3":0.43,"max":0.43,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"timeUsage":{"mean":0.08,"min":0.08,"q1":0.08,"q2":0.08,"q3":0.08,"max":0.08,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"vmem":{"mean":5988974592,"min":5988974592,"q1":5988974592,"q2":5988974592,"q3":5988974592,"max":5988974592,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"reads":{"mean":76752522,"min":76752522,"q1":76752522,"q2":76752522,"q3":76752522,"max":76752522,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"cpu":{"mean":180.7,"min":180.7,"q1":180.7,"q2":180.7,"q3":180.7,"max":180.7,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"time":{"mean":12119,"min":12119,"q1":12119,"q2":12119,"q3":12119,"max":12119,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"},"writes":{"mean":6349,"min":6349,"q1":6349,"q2":6349,"q3":6349,"max":6349,"minLabel":"get_software_versions","maxLabel":"get_software_versions","q1Label":"get_software_versions","q2Label":"get_software_versions","q3Label":"get_software_versions"}},{"cpuUsage":null,"process":"BWA_INDEX","mem":null,"memUsage":null,"timeUsage":{"mean":0.19,"min":0.19,"q1":0.19,"q2":0.19,"q3":0.19,"max":0.19,"minLabel":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)","maxLabel":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)","q1Label":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)","q2Label":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)","q3Label":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)"},"vmem":null,"reads":null,"cpu":null,"time":{"mean":109740,"min":109740,"q1":109740,"q2":109740,"q3":109740,"max":109740,"minLabel":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)","maxLabel":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)","q1Label":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)","q2Label":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)","q3Label":"BWA_INDEX (GRCh38.primary_assembly.genome.fa)"},"writes":null}]
+Oct-04 14:24:19.303 [main] DEBUG nextflow.trace.TimelineObserver - Flow completing -- rendering html timeline
+Oct-04 14:24:20.270 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
+Oct-04 14:24:20.317 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
