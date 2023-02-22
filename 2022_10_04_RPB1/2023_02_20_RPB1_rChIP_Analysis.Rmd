@@ -31,20 +31,20 @@ rtracklayer::export(lncrna_mrna_promoters, "/scratch/Shares/rinn/tenaya/rChIP/rC
 ```
 
 ```{r gencode annotations}
-# DEseq2 needs a specific package of 'locfit' that has to be installed first
-install.packages("https://cran.r-project.org/src/contrib/Archive/locfit/locfit_1.5-9.4.tar.gz", repos=NULL, type="source")
-# Now we can install DEseq2
-BiocManager::install("DESeq2")
+## DEseq2 needs a specific package of 'locfit' that has to be installed first
+#install.packages("https://cran.r-project.org/src/contrib/Archive/locfit/locfit_1.5-9.4.tar.gz", repos=NULL, type="source")
+#3 Now we can install DEseq2
+#BiocManager::install("DESeq2")
 # now load the package
-library(DESeq2)
+#library(DESeq2)
 ```
 
 
 ```{r}
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
+#if (!require("BiocManager", quietly = TRUE))
+   #install.packages("BiocManager")
 
-BiocManager::install("Rsubread")
+#BiocManager::install("Rsubread")
 ```
 
 
@@ -279,9 +279,49 @@ dds_rnase_input <- DESeq(dds_rnase_input)
 resultsNames(dds_rnase_input)
 # filter out intercept results
 rnase_input_res <-
-  results(dds_rnase_input, name = "condition_rpb1_RNase_vs_input", tidy = TRUE)
+  results(dds_rnase_input, name = "condition_rnase_vs_input", tidy = TRUE)
 # volcano plot  +rnase_ChIP / input
 ggplot(rnase_input_res, aes(x = log2FoldChange, y = -log10(pvalue))) +
   geom_point()
 ggsave("figures/rpb1_PlusRnase_ChIP_v_input_volcano.pdf")
 ```
+
+# ChIP +/- Rnase comparison
+# Subselecting Deseq results from three conditions:
+#(i) RNase-chip -vs- chip
+#(ii) chip/input
+#(iii) rnase/input
+```{r selecting cols from each result }
+# starting with rnase/chip results - renaming and merging together
+# with chip/input and rnase/input results.
+chip_rnase_data <- rnase_res %>%
+  dplyr::select(row, log2FoldChange, pvalue) %>%
+  dplyr::rename(l2fc_rnase_vs_chip = log2FoldChange,
+                pvalue_rnase_vs_chip = pvalue) %>%
+  left_join(chip_input_res %>%
+              dplyr::select(row, log2FoldChange, padj) %>%
+              dplyr::rename(l2fc_chip_vs_input = log2FoldChange,
+                            padj_chip_vs_input = padj)) %>%
+  left_join(rnase_input_res %>%
+              dplyr::select(row, log2FoldChange, padj) %>%
+              dplyr::rename(l2fc_rnase_vs_input = log2FoldChange,
+                            padj_rnase_vs_input = padj))
+# creating a significant col with mutate
+chip_rnase_data <- chip_rnase_data %>%
+  mutate(sig = pvalue_rnase_vs_chip <= 0.05)
+# chaging row to GeneID to merge with SAF
+colnames(chip_rnase_data)[1] <- "GeneID"
+# merging with CTCF SAF to get peak coordinates
+chip_rnase_data <- left_join(chip_rnase_data, RPB1_saf)
+# actually plotting
+ggplot(chip_rnase_data, aes(x = l2fc_chip_vs_input, y = l2fc_rnase_vs_input, color = sig)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_abline(slope = 1) +
+  geom_smooth(aes(group =1), method = "lm")
+# TODO why this doesn't make nice colors :)
+theme_paperwhite()
+ggsave("figures/rpb1_rchip_result.pdf")
+```
+
