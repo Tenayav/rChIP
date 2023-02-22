@@ -170,7 +170,7 @@ write_rds(rpb1_feature_counts, "RPB1_feature_counts_output.rds")
 # save(chip_rnase_data, counts_matrix, ctcf_feature_counts, ctcf_peaks, ctcf_saf, rnase_input_res, rnase_res, chip_input_res, sample_df, samples_chip, samples_rnase, samples_rnase_input, file = "results/ctcf_chip_combined_5_reps/ctcf_rnase.RData")
 # load("results/ctcf_chip_combined_5_reps/ctcf_rnase.RData", verbose = T)
 # saving minimal objects 
-save(rpb1_bams, RPB1_saf, file = "minimal_env_object.RData")
+save(rpb1_feature_counts, RPB1_saf, file = "minimal_env_object.RData")
 # load in 
 load("minimal_env_object.RData", verbose = T)
 ```
@@ -179,7 +179,7 @@ load("minimal_env_object.RData", verbose = T)
 ```{r sample sheet for Deseq}
 # setting up samples_df data.frame - start with ctcf_feature_counts object
 sample_df <-
-  data.frame(filename = fc_pe[["targets"]]) %>%
+  data.frame(filename = rpb1_feature_counts[["targets"]]) %>%
   mutate(sample_name = filename)
 sample_df$sample_name = gsub(".bam|.mLb.clN.sorted.bam|R1.mLb.clN.sorted.bam",
                              "",
@@ -188,12 +188,100 @@ sample_df$sample_name = gsub(".bam|.mLb.clN.sorted.bam|R1.mLb.clN.sorted.bam",
 # creating sample sheet - file names are in target's col
 sample_df <- sample_df %>%
   mutate(condition = ifelse(
-    grepl("wash", sample_name),
-    "rnase_wash",
-    ifelse(
-      grepl("chip", sample_name),
-      "ctcf_chip",
+      grepl("NoR", sample_name),
+      "rpb1_nornase",
       ifelse(grepl("input", sample_name), "input", "rnase")
     )
-  ))
+  )
+```
+
+# (5) create samples and counts for three conditions:
+# (i) rnase -vs- chip
+```{r creating all the needed count matrix and samples sheets for Deseq}
+# getting the counts matrix from feature counts output
+counts_matrix <- rpb1_feature_counts$counts
+# ChIP +/- comparison
+samples_rnase <- sample_df %>%
+  filter(condition %in% c("rnase", "rpb1_nornase"))
+# subsetting counts matrix
+rnase_count_matrix <- counts_matrix[, samples_rnase$filename]
+# factoring for deseq (+rnase/-rnase)
+samples_rnase <- samples_rnase %>%
+  mutate(condition = factor(condition, levels = c("rpb1_nornase", "rnase")))
+# Deseq
+dds_rnase <-
+  DESeqDataSetFromMatrix(countData = rnase_count_matrix,
+                         colData = samples_rnase,
+                         design = ~ condition)
+# Running Deseq
+dds_rnase <- DESeq(dds_rnase)
+# getting names
+resultsNames(dds_rnase)
+# filter out intercept results
+rnase_res <-
+  results(dds_rnase, name = "condition_rnase_vs_rpb1_nornase", tidy = TRUE)
+# volcano plot +/- RNase ChIP
+ggplot(rnase_res, aes(x = log2FoldChange, y = -log10(pvalue))) +
+  geom_point()
+# saving
+ggsave("figures/rpb1_NoRnaseChIP_v_PlusRnaseChIP_volcano.pdf")
+```
+
+# (ii) chip -vs input
+
+```{r chip vs input}
+# subsetting chip samples and input
+samples_chip <- sample_df %>%
+  filter(condition %in% c("input", "rpb1_nornase"))
+# subsetting counts matrix to chip and input
+chip_count_matrix <- counts_matrix[, samples_chip$filename]
+# factoring for deseq (chip/input)
+samples_chip <- samples_chip %>%
+  mutate(condition = factor(condition, levels = c("input", "rpb1_nornase")))
+# chip Deseq matrix input
+dds_chip_input <-
+  DESeqDataSetFromMatrix(countData = chip_count_matrix,
+                         colData = samples_chip,
+                         design = ~ condition)
+# running Deseq
+dds_chip_input <- DESeq(dds_chip_input)
+# getting names
+resultsNames(dds_chip_input)
+# filter out intercept results
+chip_input_res <-
+  results(dds_chip_input, name = "condition_rpb1_nornase_vs_input", tidy = TRUE)
+# volcano plot  ChIP / input
+ggplot(chip_input_res, aes(x = log2FoldChange, y = -log10(pvalue))) +
+  geom_point()
+# saving
+ggsave("figures/rpb1_noRnase_ChIP_v_input_volcano.pdf")
+```
+
+# (iii) rnase -vs input
+```{r deseq on +rnase chip vs input}
+# subsetting to +Rnase chip and input
+samples_rnase_input <- sample_df %>%
+  filter(condition %in% c("input", "rnase"))
+# subsetting counts matrix
+rnase_input_count_matrix <-
+  counts_matrix[, samples_rnase_input$filename]
+# factoring for deseq
+samples_rnase_input <- samples_rnase_input %>%
+  mutate(condition = factor(condition, levels = c("input", "rnase")))
+# setting up deseq +rnase chip/ input
+dds_rnase_input <-
+  DESeqDataSetFromMatrix(countData = rnase_input_count_matrix,
+                         colData = samples_rnase_input,
+                         design = ~ condition)
+# running Deseq
+dds_rnase_input <- DESeq(dds_rnase_input)
+# getting names
+resultsNames(dds_rnase_input)
+# filter out intercept results
+rnase_input_res <-
+  results(dds_rnase_input, name = "condition_rpb1_RNase_vs_input", tidy = TRUE)
+# volcano plot  +rnase_ChIP / input
+ggplot(rnase_input_res, aes(x = log2FoldChange, y = -log10(pvalue))) +
+  geom_point()
+ggsave("figures/rpb1_PlusRnase_ChIP_v_input_volcano.pdf")
 ```
