@@ -5,13 +5,13 @@ author: Tenaya Vallery
 Date: "Feb 20, 2023"
 Modified from boulderrinnlab  rchip/analysis/02_RBP1/02_RBP1_analysis.Rmd 
 ---
-```{r setup, include=FALSE}
+```{r setup, include=FALSE}s
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(GenomicRanges)
 #library(ComplexHeatmap)
-#library(Rsubread)
-#library(DESeq2)
+library(Rsubread)
+library(DESeq2)
 source("/scratch/Shares/rinn/tenaya/util/intersect_functions.R")
 
 
@@ -37,21 +37,29 @@ library(DESeq2)
 ````
 
 
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Rsubread")
+```
+
+
 # Importing RBP1 broad_peaks from NF_core pipeline and bam files
 ```{r RBP1 braod peak files from NF_Core }
 # loading in the RBP1 chip without RNAse (-)
-RBP1_no_rnase_1 <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_NoR_R1_peaks.broadPeak")
-RBP1_no_ranase_1_df <- RBP1_no_rnase_1 %>% as.data.frame()
+RPB1_no_rnase_1 <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_NoR_R1_peaks.broadPeak")
+RPB1_no_ranase_1_df <- RPB1_no_rnase_1 %>% as.data.frame()
 # making a fake replicate for deseq
-RBP1_no_rnase_2 <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_NoR_R2_peaks.broadPeak")
+RPB1_no_rnase_2 <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_NoR_R2_peaks.broadPeak")
 # loading in +rnase peak files
-RBP1_rnase_1 <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_Rnase_R1_peaks.broadPeak")
+RPB1_rnase_1 <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_Rnase_R1_peaks.broadPeak")
 # making a fake replicate for deseq
-RBP1_rnase_2 <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_Rnase_R2_peaks.broadPeak")
+RPB1_rnase_2 <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_Rnase_R2_peaks.broadPeak")
 # finding fold change between +/- RNase
-Rbp1_peaks <- RBP1_no_rnase_1
+Rpb1_peaks <- RPB1_no_rnase_1
 # creating .saf
-RBP1_saf <- Rbp1_peaks %>%
+RPB1_saf <- Rpb1_peaks %>%
   as.data.frame() %>%
   # making sure to only grab normal chr not contigs (e.g., GL000009.2)
   filter(grepl("chr", seqnames)) %>%
@@ -63,20 +71,20 @@ RBP1_saf <- Rbp1_peaks %>%
                 Strand = strand) %>%
     dplyr::select(GeneID, Chr, Start, End, Strand)
 # Writting out .saf
-write.table(RBP1_saf, "results/RBP1_peaks_combined.saf", sep = "\t", quote = F, row.names = F)
+write.table(RPB1_saf, file = "RPB1_peaks_combined.saf", sep = "\t", quote = F, row.names = F)
+
 ```
 
 Running feature counts
 ```{r}
 # these files are far away so creating base-path 
-base_path <- "/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/"
+base_path <- "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/"
 # Creating a list of all bams and file paths
-pe_bams <- c(paste0(base_path, "RBP1_no_rnase_R1.mLb.clN.sorted.bam"), 
-             paste0(base_path, "RBP1_rnase_R1.mLb.clN.sorted.bam"))
+pe_bams <- c(paste0(base_path, "RPB1_NoR_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_NoR_R2.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R1.mLb.clN.sorted.bam"))
         
 # Running feature counts on CTCF chip samples and inputs (June 2022)
 fc_pe <- featureCounts(files = pe_bams,
-                    annot.ext = "results/RBP1_peaks_combined.saf",
+                    annot.ext = "RPB1_peaks_combined.saf",
                     isPairedEnd = TRUE,
                     nthreads = 6)
 # find how many reads in bam file
@@ -90,12 +98,12 @@ counts_summary <- counts_df %>%
   pivot_longer(2:3, names_to = "sample_id", values_to = "count") %>%
   group_by(sample_id) %>%
   summarize(total_counts_over_peaks = sum(count))
-ggplot(counts_df, aes(x = log10(RBP1.no.rnase.R1.mLb.clN.sorted.bam), 
-                      y = log10(RBP1.rnase.R1.mLb.clN.sorted.bam))) +
+ggplot(counts_df, aes(x = log10(RPB1_NoR_R1.mLb.clN.sorted.bam), 
+                      y = log10(RPB1_Rnase_R1.mLb.clN.sorted.bam))) +
   geom_point()
 counts_df <- counts_df %>%
-  mutate(unnormalized_ratio = log2(RBP1.no.rnase.R1.mLb.clN.sorted.bam / RBP1.rnase.R1.mLb.clN.sorted.bam)) %>%
-  left_join(RBP1_saf %>% dplyr::rename(peak_id = GeneID))
+  mutate(unnormalized_ratio = log2(RPB1_NoR_R1.mLb.clN.sorted.bam / RPB1_Rnase_R1.mLb.clN.sorted.bam)) %>%
+  left_join(RPB1_saf %>% dplyr::rename(peak_id = GeneID))
 ggplot(counts_df, aes(x = unnormalized_ratio)) +
   geom_density() +
   geom_hline(yintercept = 0) +
