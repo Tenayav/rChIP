@@ -152,9 +152,48 @@ samtools view -c -F 260 /scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/
 #Working on generating the Fold Change Log 2 (ChIP/Input) with +Rnase on Y-axis and NoRnase on X-axis
 #How cool would it be to combine with CTCF info like Tae Young did for the paper!
 ```{r}
-#grabbing featureCounts work from earlier.
-write_rds(fc_pe, "RPB1_feature_counts_output.rds")
+## create an object of all bam files (***including inputs***)
+rpb1_bams <- c(paste0(base_path, "RPB1_NoR_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_NoR_R2.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R2.mLb.clN.sorted.bam"),paste0(base_path,"input_R1.mLb.clN.sorted.bam"), paste0(base_path,"input_R2.mLb.clN.sorted.bam"))
 
+rpb1_feature_counts <- featureCounts(files=rpb1_bams,
+                                     annot.ext = "RPB1_peaks_combined.saf",
+                                     isPairedEnd = TRUE,
+                                     nthreads = 6)
+
+write_rds(rpb1_feature_counts, "RPB1_feature_counts_output.rds")
 ```
 
+#new type of r space. 
+#Not sure of the benefit for the below. 
+```{r start point}
+# saving env objects:
+# save(chip_rnase_data, counts_matrix, ctcf_feature_counts, ctcf_peaks, ctcf_saf, rnase_input_res, rnase_res, chip_input_res, sample_df, samples_chip, samples_rnase, samples_rnase_input, file = "results/ctcf_chip_combined_5_reps/ctcf_rnase.RData")
+# load("results/ctcf_chip_combined_5_reps/ctcf_rnase.RData", verbose = T)
+# saving minimal objects 
+save(rpb1_bams, RPB1_saf, file = "minimal_env_object.RData")
+# load in 
+load("minimal_env_object.RData", verbose = T)
+```
 
+#Creating sample_df for DEseq input
+```{r sample sheet for Deseq}
+# setting up samples_df data.frame - start with ctcf_feature_counts object
+sample_df <-
+  data.frame(filename = fc_pe[["targets"]]) %>%
+  mutate(sample_name = filename)
+sample_df$sample_name = gsub(".bam|.mLb.clN.sorted.bam|R1.mLb.clN.sorted.bam",
+                             "",
+                             sample_df$sample_name) 
+# mutate to new col "condition"
+# creating sample sheet - file names are in target's col
+sample_df <- sample_df %>%
+  mutate(condition = ifelse(
+    grepl("wash", sample_name),
+    "rnase_wash",
+    ifelse(
+      grepl("chip", sample_name),
+      "ctcf_chip",
+      ifelse(grepl("input", sample_name), "input", "rnase")
+    )
+  ))
+```
