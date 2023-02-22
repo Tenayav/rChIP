@@ -100,8 +100,8 @@ counts_summary <- counts_df %>%
   group_by(sample_id) %>%
   summarize(total_counts_over_peaks = sum(count))
   
-ggplot(counts_df, aes(x = log2(RPB1.NoR.R1.mLb.clN.sorted.bam), 
-                      y = log2(RPB1.Rnase.R1.mLb.clN.sorted.bam))) +
+ggplot(counts_df, aes(x = log10(RPB1.NoR.R1.mLb.clN.sorted.bam), 
+                      y = log10(RPB1.Rnase.R1.mLb.clN.sorted.bam))) +
   geom_point()
 
 counts_df <- counts_df %>%
