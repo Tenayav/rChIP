@@ -80,7 +80,7 @@ Running feature counts
 # these files are far away so creating base-path 
 base_path <- "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/"
 # Creating a list of all bams and file paths
-pe_bams <- c(paste0(base_path, "RPB1_NoR_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_NoR_R2.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R1.mLb.clN.sorted.bam"))
+pe_bams <- c(paste0(base_path, "RPB1_NoR_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_NoR_R2.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R2.mLb.clN.sorted.bam"))
         
 # Running feature counts on CTCF chip samples and inputs (June 2022)
 fc_pe <- featureCounts(files = pe_bams,
@@ -94,15 +94,31 @@ fc_pe <- featureCounts(files = pe_bams,
 counts_df <- fc_pe$counts %>%
   as.data.frame() %>%
   rownames_to_column("peak_id")
+  
 counts_summary <- counts_df %>%
   pivot_longer(2:3, names_to = "sample_id", values_to = "count") %>%
   group_by(sample_id) %>%
   summarize(total_counts_over_peaks = sum(count))
-ggplot(counts_df, aes(x = log10(RPB1_NoR_R1.mLb.clN.sorted.bam), 
-                      y = log10(RPB1_Rnase_R1.mLb.clN.sorted.bam))) +
+  
+ggplot(counts_df, aes(x = log2(RPB1.NoR.R1.mLb.clN.sorted.bam), 
+                      y = log2(RPB1.Rnase.R1.mLb.clN.sorted.bam))) +
   geom_point()
+
 counts_df <- counts_df %>%
-  mutate(unnormalized_ratio = log2(RPB1_NoR_R1.mLb.clN.sorted.bam / RPB1_Rnase_R1.mLb.clN.sorted.bam)) %>%
+  mutate(unnormalized_ratio = log2(RPB1.NoR.R1.mLb.clN.sorted.bam / RPB1.Rnase.R1.mLb.clN.sorted.bam)) %>%
+  left_join(RPB1_saf %>% dplyr::rename(peak_id = GeneID))
+ggplot(counts_df, aes(x = unnormalized_ratio)) +
+  geom_density() +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0)
+  
+#second replicate
+ggplot(counts_df, aes(x = log10(RPB1.NoR.R2.mLb.clN.sorted.bam), 
+                      y = log10(RPB1.Rnase.R2.mLb.clN.sorted.bam))) +
+  geom_point()
+  
+counts_df <- counts_df %>%
+  mutate(unnormalized_ratio = log2(RPB1.NoR.R2.mLb.clN.sorted.bam / RPB1.Rnase.R2.mLb.clN.sorted.bam)) %>%
   left_join(RPB1_saf %>% dplyr::rename(peak_id = GeneID))
 ggplot(counts_df, aes(x = unnormalized_ratio)) +
   geom_density() +
@@ -112,11 +128,22 @@ ggplot(counts_df, aes(x = unnormalized_ratio)) +
 
 
 ```{bash}
+#BASH -> Go to TERMINAL
 module load samtools
-samtools view -c -F 260 RBP1_no_rnase_R1.mLb.clN.sorted.bam
-# X number of reads aligned
-91076474
-samtools view -c -F 260 RBP1_rnase_R1.mLb.clN.sorted.bam
-# X number of reads aligned
-87606172
+samtools view -c -F 260 /scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/RPB1_NoR_R1.mLb.clN.sorted.bam
+# This took a hot minute FYI (~5 minutes). 
+# X number of reads aligned = 78184432
+
+samtools view -c -F 260 /scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/RPB1_Rnase_R1.mLb.clN.sorted.bam
+# X number of reads aligned=74630534
+
+#Replicate 2
+
+samtools view -c -F 260 /scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/RPB1_NoR_R2.mLb.clN.sorted.bam
+#Number of reads aligned = 68630096 
+
+samtools view -c -F 260 /scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/RPB1_Rnase_R2.mLb.clN.sorted.bam
+#Number of reads aligned = 57802320
 ```
+
+#Working on generating the Fold Change Log 2 (ChIP/Input) with +Rnase on Yaxis and NoRnase on xaxis
