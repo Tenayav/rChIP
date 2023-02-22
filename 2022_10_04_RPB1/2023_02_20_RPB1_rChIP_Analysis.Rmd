@@ -5,7 +5,8 @@ author: Tenaya Vallery
 Date: "Feb 20, 2023"
 Modified from boulderrinnlab  rchip/analysis/02_RBP1/02_RBP1_analysis.Rmd 
 ---
-```{r setup, include=FALSE}s
+
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(GenomicRanges)
@@ -13,7 +14,9 @@ library(GenomicRanges)
 library(Rsubread)
 library(DESeq2)
 source("/scratch/Shares/rinn/tenaya/util/intersect_functions.R")
-
+library(ggpubr)
+source("/scratch/Shares/rinn/tenaya/util/_setup.R")
+source("/scratch/Shares/rinn/tenaya/util/rinnlab_plot_theme.R")
 
 ```
 
@@ -34,7 +37,7 @@ install.packages("https://cran.r-project.org/src/contrib/Archive/locfit/locfit_1
 BiocManager::install("DESeq2")
 # now load the package
 library(DESeq2)
-````
+```
 
 
 ```{r}
@@ -146,4 +149,7 @@ samtools view -c -F 260 /scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/
 #Number of reads aligned = 57802320
 ```
 
-#Working on generating the Fold Change Log 2 (ChIP/Input) with +Rnase on Yaxis and NoRnase on xaxis
+#Working on generating the Fold Change Log 2 (ChIP/Input) with +Rnase on Y-axis and NoRnase on X-axis
+#How cool would it be to combine with CTCF info like Tae Young did for the paper!
+
+
