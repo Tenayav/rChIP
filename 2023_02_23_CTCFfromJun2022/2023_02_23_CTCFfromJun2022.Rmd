@@ -56,7 +56,7 @@ ${BASE_PATH}/4_input_rep_2.mLb.clN.sorted.bam \
 ${BASE_PATH}/4_input_rep_3.R1.mLb.clN.sorted.bam \
 ${BASE_PATH}/4_input_rep_4.R1.mLb.clN.sorted.bam \
 ${BASE_PATH}/4_input_rep_5.R1.mLb.clN.sorted.bam \
--g hs -n CTCF_chipseq_combined  -q 0.01 --outdir ../results/ctcf_chip_combined_5_reps
+-g hs -n CTCF_chipseq_combined  -q 0.01 --outdir .
 date
 ```
 
