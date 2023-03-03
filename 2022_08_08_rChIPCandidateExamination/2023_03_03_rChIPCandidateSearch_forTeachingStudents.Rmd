@@ -1,0 +1,59 @@
+---
+title: "2023_03_03_rChIPCandidateSearch_forTeachingStudents"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(stringsAsFactors = F)
+library(GenomicRanges)
+library(tidyverse)
+# library(Gviz)
+library(IRanges)
+source("/scratch/Shares/rinn/tenaya/util/intersect_functions.R")
+source("/scratch/Shares/rinn/tenaya/util/plotting_functions.R")
+library(valr)
+```
+
+#promoters
+```{r}
+# First we need promoters let's make them quick: (actually takes 5 min or so)
+gencode_gr <- rtracklayer::import("/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v32/gencode.v32.annotation.gtf")
+# create promoters 
+promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], upstream = 1000, downstream = 1000) 
+```
+
+
+```{r}
+#EWSR1 ChIP
+# Run the following in BASH i.e. terminal
+# wget https://www.encodeproject.org/files/ENCFF924FYI/@@download/ENCFF924FYI.bed.gz
+#There is only one replicate
+ewsr1_peaks <- read_tsv("/Users/teva8543/scratch/rChIP/ENCODE_downloads/ENCFF924FYI.bed.gz", col_names = F)
+names(ewsr1_peaks) <- c('chromosome', 'start', 'end', 'name', 'score', 'strand',
+                       'signalValue', 'pValue', 'qValue', 'peak_center')
+write.csv(ewsr1_peaks,"/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_08_08_rChIPCandidateExamination//ewsr1_peaks_ENCFF924FYI.csv",row.names = TRUE)
+#1264 peaks as a heads up
+# converting to Granges
+ewsr1_gr <- GRanges(ewsr1_peaks$chromosome, IRanges(ewsr1_peaks$start, ewsr1_peaks$end))
+# creating metaplot DF and running profile_tss
+ewsr1_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+ewsr1_metaplot_df <- profile_tss(ewsr1_gr, promoters)
+# plotting
+ggplot(ewsr1_metaplot_df, aes(x = x, y = dens)) +
+  geom_line(size = 1.5)
+nrow(ewsr1_peaks)
+# only 750 or so peaks
+subsetByOverlaps(ewsr1_gr, promoters)
+```
+
+##Now do this for hnRNPK
+
+
+
+##Now do this for some interesting proteins
