@@ -39,5 +39,5 @@
 *.RData
 *.narrowPeak
 *.xls
-*macs.err
-*macs.out
+*.err
+*.out
