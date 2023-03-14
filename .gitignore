@@ -37,3 +37,7 @@
 *.saf
 *.rds
 *.RData
+*.narrowPeak
+*.xls
+*macs.err
+*macs.out
