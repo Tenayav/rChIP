@@ -1,2 +1,393 @@
-/tmp/slurmd/job8841658/slurm_script: line 16: activate: No such file or directory
-/tmp/slurmd/job8841658/slurm_script: line 18: macs3: command not found
+INFO  @ Mon, 06 Mar 2023 09:02:52: 
+# Command line: callpeak -f BAMPE -t /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_1.mLb.clN.sorted.bam /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_2.mLb.clN.sorted.bam /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_3.R1.mLb.clN.sorted.bam /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_4.R1.mLb.clN.sorted.bam /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_5.R1.mLb.clN.sorted.bam -c /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_1.mLb.clN.sorted.bam /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_2.mLb.clN.sorted.bam /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_3.R1.mLb.clN.sorted.bam /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_4.R1.mLb.clN.sorted.bam /scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_5.R1.mLb.clN.sorted.bam -g hs -n CTCF_chipseq_combined -q 0.01 --outdir .
+# ARGUMENTS LIST:
+# name = CTCF_chipseq_combined
+# format = BAMPE
+# ChIP-seq file = ['/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_1.mLb.clN.sorted.bam', '/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_2.mLb.clN.sorted.bam', '/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_3.R1.mLb.clN.sorted.bam', '/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_4.R1.mLb.clN.sorted.bam', '/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/1_ctcf_chip_rep_5.R1.mLb.clN.sorted.bam']
+# control file = ['/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_1.mLb.clN.sorted.bam', '/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_2.mLb.clN.sorted.bam', '/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_3.R1.mLb.clN.sorted.bam', '/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_4.R1.mLb.clN.sorted.bam', '/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf/4_input_rep_5.R1.mLb.clN.sorted.bam']
+# effective genome size = 2.91e+09
+# band width = 300
+# model fold = [5, 50]
+# qvalue cutoff = 1.00e-02
+# The maximum gap between significant sites is assigned as the read length/tag size.
+# The minimum length of peaks is assigned as the predicted fragment length "d".
+# Larger dataset will be scaled towards smaller dataset.
+# Range for calculating regional lambda is: 1000 bps and 10000 bps
+# Broad region calling is off
+# Paired-End mode is on
+ 
+INFO  @ Mon, 06 Mar 2023 09:02:52: #1 read fragment files... 
+INFO  @ Mon, 06 Mar 2023 09:02:52: #1 read treatment fragments... 
+INFO  @ Mon, 06 Mar 2023 09:03:02:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:03:10:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:03:18:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:03:26:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:03:34:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:03:42:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:03:50:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:03:59:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:04:07:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:04:16:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:04:23:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:04:32:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:04:40:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:04:48:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:04:56:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:05:04:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:05:14:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:05:23:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:05:32:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:05:41:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:05:50:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:06:01:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:06:10:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:06:20:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:06:28:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:06:39:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:06:51:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:06:59:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:07:08:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:07:11: 29296924 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:07:22:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:07:31:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:07:41:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:07:53:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:08:06:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:08:19:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:08:28:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:08:39:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:08:49:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:09:00:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:09:12:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:09:21:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:09:33:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:09:41:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:09:52:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:10:03:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:10:13:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:10:24:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:10:34:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:10:46:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:10:56:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:11:05:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:11:16:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:11:26:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:11:37:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:11:47:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:11:58:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:12:00: 27193070 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:12:11:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:12:19:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:12:33:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:12:47:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:13:00:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:13:14:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:13:27:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:13:40:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:13:49:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:14:02:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:14:16:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:14:29:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:14:43:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:14:56:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:15:08:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:15:16:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:15:24:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:15:33:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:15:42:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:15:51:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:15:59:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:16:08:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:16:16:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:16:24:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:16:32:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:16:40:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:16:48:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:16:56:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:17:04:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:17:14:  30000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:17:22:  31000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:17:30: 31916310 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:17:38:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:17:46:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:17:54:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:18:02:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:18:10:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:18:18:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:18:25:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:18:34:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:18:42:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:18:50:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:18:58:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:19:06:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:19:13:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:19:21:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:19:29:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:19:37:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:19:45:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:19:54:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:20:02:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:20:10:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:20:18:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:20:26:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:20:34:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:20:42:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:20:50:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:20:58:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:21:06:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:21:14:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:21:23:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:21:31:  30000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:21:39:  31000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:21:48:  32000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:21:52: 32500643 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:22:00:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:22:08:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:22:16:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:22:24:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:22:32:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:22:40:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:22:49:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:22:57:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:23:05:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:23:13:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:23:21:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:23:30:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:23:38:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:23:47:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:23:56:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:24:04:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:24:13:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:24:21:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:24:29:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:24:38:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:24:47:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:24:55:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:25:04:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:25:12:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:25:21:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:25:31:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:25:39:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:25:47:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:25:56:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:26:04:  30000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:26:12:  31000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:26:21:  32000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:26:29:  33000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:26:38:  34000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:26:46:  35000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:26:54:  36000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:27:02:  37000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:27:11:  38000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:27:19:  39000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:27:28:  40000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:27:36:  41000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:27:45:  42000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:27:53: 42912817 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:30:48: #1.2 read input fragments... 
+INFO  @ Mon, 06 Mar 2023 09:30:56:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:31:03:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:31:11:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:31:19:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:31:26:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:31:35:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:31:43:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:31:50:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:31:58:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:32:07:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:32:14:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:32:22:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:32:30:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:32:38:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:32:46:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:32:54:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:33:02:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:33:10:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:33:18:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:33:25:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:33:33:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:33:41:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:33:50:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:33:57:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:34:06:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:34:13:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:34:20:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:34:28:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:34:36:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:34:44:  30000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:34:52:  31000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:34:53: 31124657 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:35:01:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:35:09:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:35:18:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:35:26:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:35:35:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:35:44:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:35:52:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:36:01:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:36:10:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:36:19:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:36:26:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:36:34:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:36:42:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:36:51:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:36:59:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:37:08:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:37:15:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:37:24:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:37:33:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:37:41:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:37:49:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:37:57:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:38:05:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:38:13:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:38:21:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:38:29:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:38:38:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:38:46:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:38:53:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:39:02:  30000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:39:10:  31000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:39:19:  32000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:39:19: 32081341 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:39:27:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:39:35:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:39:43:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:39:51:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:39:59:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:40:07:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:40:16:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:40:24:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:40:32:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:40:40:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:40:49:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:40:56:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:41:05:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:41:13:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:41:22:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:41:30:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:41:38:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:41:47:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:41:56:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:42:04:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:42:13:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:42:21:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:42:30:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:42:38:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:42:46:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:42:55:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:43:04:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:43:13:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:43:21:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:43:29:  30000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:43:38:  31000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:43:46:  32000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:43:54:  33000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:44:02:  34000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:44:05: 34305393 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:44:13:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:44:21:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:44:30:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:44:39:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:44:47:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:44:55:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:45:04:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:45:13:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:45:21:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:45:29:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:45:38:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:45:46:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:45:55:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:46:03:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:46:11:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:46:19:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:46:28:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:46:36:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:46:44:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:46:52:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:47:01:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:47:11:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:47:19:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:47:28:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:47:36:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:47:44:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:47:53:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:48:01:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:48:09:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:48:17:  30000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:48:26:  31000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:48:34:  32000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:48:42:  33000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:48:48: 33750433 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:48:57:  1000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:49:05:  2000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:49:14:  3000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:49:22:  4000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:49:30:  5000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:49:38:  6000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:49:46:  7000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:49:55:  8000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:50:03:  9000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:50:11:  10000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:50:20:  11000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:50:28:  12000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:50:37:  13000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:50:45:  14000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:50:54:  15000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:51:02:  16000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:51:10:  17000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:51:18:  18000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:51:27:  19000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:51:35:  20000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:51:43:  21000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:51:51:  22000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:51:59:  23000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:52:08:  24000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:52:15:  25000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:52:23:  26000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:52:31:  27000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:52:39:  28000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:52:47:  29000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:52:55:  30000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:53:04:  31000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:53:13:  32000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:53:21:  33000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:53:29:  34000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:53:38:  35000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:53:46:  36000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:53:54:  37000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:54:03:  38000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:54:11:  39000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:54:19:  40000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:54:27:  41000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:54:35:  42000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:54:43:  43000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:54:51:  44000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:54:59:  45000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:55:07:  46000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:55:15:  47000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:55:23:  48000000 fragments parsed 
+INFO  @ Mon, 06 Mar 2023 09:55:30: 48920295 fragments have been read. 
+INFO  @ Mon, 06 Mar 2023 09:58:46: #1 mean fragment size is determined as 260.1 bp from treatment 
+INFO  @ Mon, 06 Mar 2023 09:58:46: #1 note: mean fragment size in control is 207.5 bp -- value ignored 
+INFO  @ Mon, 06 Mar 2023 09:58:46: #1 fragment size = 260.1 
+INFO  @ Mon, 06 Mar 2023 09:58:46: #1  total fragments in treatment: 163819764 
+INFO  @ Mon, 06 Mar 2023 09:58:46: #1 user defined the maximum fragments... 
+INFO  @ Mon, 06 Mar 2023 09:58:46: #1 filter out redundant fragments by allowing at most 1 identical fragment(s) 
+INFO  @ Mon, 06 Mar 2023 10:05:47: #1  fragments after filtering in treatment: 162554570 
+INFO  @ Mon, 06 Mar 2023 10:05:47: #1  Redundant rate of treatment: 0.01 
+INFO  @ Mon, 06 Mar 2023 10:05:47: #1  total fragments in control: 180182119 
+INFO  @ Mon, 06 Mar 2023 10:05:47: #1 user defined the maximum fragments... 
+INFO  @ Mon, 06 Mar 2023 10:05:47: #1 filter out redundant fragments by allowing at most 1 identical fragment(s) 
+INFO  @ Mon, 06 Mar 2023 10:13:34: #1  fragments after filtering in control: 179973360 
+INFO  @ Mon, 06 Mar 2023 10:13:34: #1  Redundant rate of control: 0.00 
+INFO  @ Mon, 06 Mar 2023 10:13:34: #1 finished! 
+INFO  @ Mon, 06 Mar 2023 10:13:34: #2 Build Peak Model... 
+INFO  @ Mon, 06 Mar 2023 10:13:34: #2 Skipped... 
+INFO  @ Mon, 06 Mar 2023 10:13:34: #3 Call peaks... 
+INFO  @ Mon, 06 Mar 2023 10:13:34: #3 Pre-compute pvalue-qvalue table... 
+INFO  @ Mon, 06 Mar 2023 10:45:32: #3 Call peaks for each chromosome... 
+INFO  @ Mon, 06 Mar 2023 10:54:09: #4 Write output xls file... ./CTCF_chipseq_combined_peaks.xls 
+INFO  @ Mon, 06 Mar 2023 10:54:10: #4 Write peak in narrowPeak format file... ./CTCF_chipseq_combined_peaks.narrowPeak 
+INFO  @ Mon, 06 Mar 2023 10:54:10: #4 Write summits bed file... ./CTCF_chipseq_combined_summits.bed 
+INFO  @ Mon, 06 Mar 2023 10:54:10: Done! 
