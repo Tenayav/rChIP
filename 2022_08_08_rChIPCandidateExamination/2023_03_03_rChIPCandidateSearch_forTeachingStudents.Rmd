@@ -8,11 +8,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-options(stringsAsFactors = F)
 library(GenomicRanges)
-library(tidyverse)
+library(dplyr)
+library(readr)
 # library(Gviz)
 library(IRanges)
 source("/scratch/Shares/rinn/tenaya/util/intersect_functions.R")
