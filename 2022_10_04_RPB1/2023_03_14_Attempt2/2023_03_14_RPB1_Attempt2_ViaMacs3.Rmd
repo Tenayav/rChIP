@@ -69,14 +69,14 @@ date
 ```{r loading in the consensus peak file (- RNase ) }
 # loading in the narrow peak consensus peaks between two CTCF ChIPseq replicates (June 2022)
 # Two inputs compared to two replicates and run on narrow peak instead of NF_CORE output broadPeak
-ctcf_peaks <- import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/CTCF_chipseq_combined_peaks.narrowPeak")
+rpb1_peaks <- import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/RPB1_chipseq_combined_peaks.narrowPeak")
 # The input to FeatureCounts is .saf (simple annotation file) which will quantify the reads in each peak
 # we need a SAF file needs that requires these colnames:
 # GeneID		Chr	Start	End	Strand
 # creating SAF file below
  # renaming cols to fit format of .saf
 # making sure to only grab normal chr not contigs (e.g., GL000009.2)
-ctcf_saf <- ctcf_peaks %>%
+rpb1_saf <- rpb1_peaks %>%
   as.data.frame() %>%
   filter(grepl("chr", seqnames)) %>%
   dplyr::rename(GeneID = name,
@@ -87,7 +87,7 @@ ctcf_saf <- ctcf_peaks %>%
   dplyr::select(c(GeneID, Chr, Start, End, Strand))
 
 # Writting out .saf
-write.table(ctcf_saf, "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/ctcf_peaks_combined.saf", sep = "\t", quote = F, row.names = F)
+write.table(rpb1_saf, "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/rpb1_peaks_combined.saf", sep = "\t", quote = F, row.names = F)
 ```
 
 
