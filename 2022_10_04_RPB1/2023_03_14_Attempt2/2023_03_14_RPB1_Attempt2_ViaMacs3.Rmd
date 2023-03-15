@@ -23,44 +23,29 @@ source("/scratch/Shares/rinn/tenaya/util/rinnlab_plot_theme.R")
 # (1) run macs in bin dir
 ```{bash}
 #!/bin/bash
-
-c
 #SBATCH -p short
-#SBATCH --job-name=CTCF_macs
+#SBATCH --job-name=RPB1_macs
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=john.rinn@colorado.edu
+#SBATCH --mail-user=tenaya.vallery@colorado.edu
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --mem=100gb
 #SBATCH --time=6:00:00
-#SBATCH --output=CTCF_chip_macs.out
-#SBATCH --error=CTCF_chip_macs.err
+#SBATCH --output=RPB1_chip_macs.out
+#SBATCH --error=RPB1_chip_macs.err
 date; hostname
-# going to nf_core chipseq outputs
-BASE_PATH=/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf
-# calling out macs3 to avtivate an env
+
+BASE_PATH=/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary
+
 source activate macs3
-# callpeak to call peaks
-# -f means bam file paired end 
-# -t is treatment group / -c is control group
-# -g is the genome "mm"
-# -n is the name of the output file
-# -- broad peak (narrow peak is the default)
-# --broad-cutoff is distance between peaks to be merged
-# -B probably makes a bedgraph file for the outputs
+
 macs3 callpeak -f BAMPE -t \
-${BASE_PATH}/1_ctcf_chip_rep_1.mLb.clN.sorted.bam \
-${BASE_PATH}/1_ctcf_chip_rep_2.mLb.clN.sorted.bam \
-${BASE_PATH}/1_ctcf_chip_rep_3.R1.mLb.clN.sorted.bam \
-${BASE_PATH}/1_ctcf_chip_rep_4.R1.mLb.clN.sorted.bam \
-${BASE_PATH}/1_ctcf_chip_rep_5.R1.mLb.clN.sorted.bam \
+${BASE_PATH}/RPB1_NoR_R1.mLb.clN.sorted.bam \
+${BASE_PATH}/RPB1_NoR_R2.mLb.clN.sorted.bam \
 -c \
-${BASE_PATH}/4_input_rep_1.mLb.clN.sorted.bam \
-${BASE_PATH}/4_input_rep_2.mLb.clN.sorted.bam \
-${BASE_PATH}/4_input_rep_3.R1.mLb.clN.sorted.bam \
-${BASE_PATH}/4_input_rep_4.R1.mLb.clN.sorted.bam \
-${BASE_PATH}/4_input_rep_5.R1.mLb.clN.sorted.bam \
--g hs -n CTCF_chipseq_combined  -q 0.01 --outdir .
+${BASE_PATH}/input_R1.mLb.clN.sorted.bam  \
+${BASE_PATH}/input_R2.mLb.clN.sorted.bam \
+-g hs -n RPB1_chipseq_combined  -q 0.01 --outdir .
 date
 ```
 
@@ -96,15 +81,24 @@ write.table(rpb1_saf, "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2
 # For each sample -- these values can be used as input for deseq below
 ```{r feature counts across all bam files (+/- RNase)}
 # create an object of all bam files (*** including inputs ***)
-ctcf_bams <- list.files("/scratch/Shares/rinn/JR/rchip/analysis/03_diff_peaks/data/BAM_files/ctcf", full.names = T)
+# these files are far away so creating base-path 
+base_path <- "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/"
+# Creating a list of all bams and file paths
+rpb1_bams <- c(paste0(base_path, "RPB1_NoR_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_NoR_R2.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R1.mLb.clN.sorted.bam"), paste0(base_path, "RPB1_Rnase_R2.mLb.clN.sorted.bam"), paste0(base_path,"input_R1.mLb.clN.sorted.bam"), paste0(base_path, "input_R2.mLb.clN.sorted.bam"))
 # Running feature counts on the bam files from ENCODE that are single ended (-RNase)
 # default is single ended but added isPairedEnd parameter to False
-ctcf_feature_counts <- featureCounts(files = ctcf_bams,
-                                     annot.ext = "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/ctcf_peaks_combined.saf",
+rpb1_feature_counts <- featureCounts(files = rpb1_bams,
+                                     annot.ext = "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/rpb1_peaks_combined.saf",
                                      isPairedEnd = TRUE,
                                      nthreads = 6)
+##Question what does nthreads mean? Says that multiple pathways executed in the program. 1 is default. 
+
+        
+
+# find how many reads in bam file
+
 # saving
-write_rds(ctcf_feature_counts, "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/CTCF_feature_counts_output.rds")
+write_rds(rpb1_feature_counts, "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/RPB1_feature_counts_output.rds")
 ```
 
 # start point save and load environment
@@ -113,16 +107,16 @@ write_rds(ctcf_feature_counts, "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_
 # save(chip_rnase_data, counts_matrix, ctcf_feature_counts, ctcf_peaks, ctcf_saf, rnase_input_res, rnase_res, chip_input_res, sample_df, samples_chip, samples_rnase, samples_rnase_input, file = "results/ctcf_chip_combined_5_reps/ctcf_rnase.RData")
 # load("results/ctcf_chip_combined_5_reps/ctcf_rnase.RData", verbose = T)
 # saving minimal objects 
-save(ctcf_feature_counts, ctcf_saf, file = "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/minimal_env_object.RData")
+save(rpb1_feature_counts, rpb1_saf, file = "/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/minimal_env_object.RData")
 # load in 
-load("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/minimal_env_object.RData", verbose = T)
+load("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/minimal_env_object.RData", verbose = T)
 ```
 
 # (4) creating sample_df for Deseq input
 ```{r sample sheet for Deseq}
 # setting up samples_df data.frame - start with ctcf_feature_counts object
 sample_df <-
-  data.frame(filename = ctcf_feature_counts[["targets"]]) %>%
+  data.frame(filename = rpb1_feature_counts[["targets"]]) %>%
   mutate(sample_name = filename)
 sample_df$sample_name = gsub(".bam|.mLb.clN.sorted.bam|R1.mLb.clN.sorted.bam",
                              "",
@@ -134,8 +128,8 @@ sample_df <- sample_df %>%
     grepl("wash", sample_name),
     "rnase_wash",
     ifelse(
-      grepl("chip", sample_name),
-      "ctcf_chip",
+      grepl("NoR", sample_name),
+      "rpb1_chip",
       ifelse(grepl("input", sample_name), "input", "rnase")
     )
   ))
@@ -145,15 +139,15 @@ sample_df <- sample_df %>%
 # (i) rnase -vs- chip
 ```{r creating all the needed count matrix and samples sheets for Deseq}
 # getting the counts matrix from feature counts output
-counts_matrix <- ctcf_feature_counts$counts
+counts_matrix <- rpb1_feature_counts$counts
 # ChIP +/- comparison
 samples_rnase <- sample_df %>%
-  filter(condition %in% c("rnase", "ctcf_chip"))
+  filter(condition %in% c("rnase", "rpb1_chip"))
 # subsetting counts matrix
 rnase_count_matrix <- counts_matrix[, samples_rnase$filename]
 # factoring for deseq (+rnase/-rnase)
 samples_rnase <- samples_rnase %>%
-  mutate(condition = factor(condition, levels = c("ctcf_chip", "rnase")))
+  mutate(condition = factor(condition, levels = c("rpb1_chip", "rnase")))
 # Deseq
 dds_rnase <-
   DESeqDataSetFromMatrix(countData = rnase_count_matrix,
@@ -165,12 +159,12 @@ dds_rnase <- DESeq(dds_rnase)
 resultsNames(dds_rnase)
 # filter out intercept results
 rnase_res <-
-  results(dds_rnase, name = "condition_rnase_vs_ctcf_chip", tidy = TRUE)
+  results(dds_rnase, name = "condition_rnase_vs_rpb1_chip", tidy = TRUE)
 # volcano plot +/- RNase ChIP
 ggplot(rnase_res, aes(x = log2FoldChange, y = -log10(pvalue))) +
   geom_point()
 # saving
-ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/chip_plus_minus_rnase_volcano.pdf")
+ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/chip_plus_minus_rnase_volcano.pdf")
 ```
 
 # (ii) chip -vs input
@@ -178,12 +172,12 @@ ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/chip_
 ```{r chip vs input}
 # subsetting chip samples and input
 samples_chip <- sample_df %>%
-  filter(condition %in% c("input", "ctcf_chip"))
+  filter(condition %in% c("input", "rpb1_chip"))
 # subsetting counts matrix to chip and input
 chip_count_matrix <- counts_matrix[, samples_chip$filename]
 # factoring for deseq (chip/input)
 samples_chip <- samples_chip %>%
-  mutate(condition = factor(condition, levels = c("input", "ctcf_chip")))
+  mutate(condition = factor(condition, levels = c("input", "rpb1_chip")))
 # chip Deseq matrix input
 dds_chip_input <-
   DESeqDataSetFromMatrix(countData = chip_count_matrix,
@@ -195,12 +189,12 @@ dds_chip_input <- DESeq(dds_chip_input)
 resultsNames(dds_chip_input)
 # filter out intercept results
 chip_input_res <-
-  results(dds_chip_input, name = "condition_ctcf_chip_vs_input", tidy = TRUE)
+  results(dds_chip_input, name = "condition_rpb1_chip_vs_input", tidy = TRUE)
 # volcano plot  ChIP / input
 ggplot(chip_input_res, aes(x = log2FoldChange, y = -log10(pvalue))) +
   geom_point()
 # saving
-ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/chip_input_volcano.pdf")
+ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/chip_input_volcano.pdf")
 ```
 
 # (iii) rnase -vs input
@@ -231,65 +225,6 @@ ggplot(rnase_input_res, aes(x = log2FoldChange, y = -log10(pvalue))) +
   geom_point()
 ```
 
-# (iv) Rnase wash -vs- chip
-```{r rnase_wash_vs_chip}
-# getting the counts matrix from feature counts output
-counts_matrix <- ctcf_feature_counts$counts
-# ChIP +/- comparison
-samples_wash_rnase <- sample_df %>%
-  filter(condition %in% c("rnase_wash", "ctcf_chip"))
-# subsetting counts matrix
-wash_rnase_count_matrix <- counts_matrix[, samples_wash_rnase$filename]
-# factoring for deseq (+rnase/-rnase)
-samples_rnase <- samples_wash_rnase %>%
-  mutate(condition = factor(condition, levels = c("ctcf_chip", "rnase_wash")))
-# Deseq
-dds_wash_rnase <-
-  DESeqDataSetFromMatrix(countData = wash_rnase_count_matrix,
-                         colData = samples_rnase,
-                         design = ~ condition)
-# Running Deseq
-dds_wash_rnase <- DESeq(dds_wash_rnase)
-# getting names
-resultsNames(dds_wash_rnase)
-# filter out intercept results
-wash_rnase_res <-
-  results(dds_wash_rnase, name = "condition_rnase_wash_vs_ctcf_chip", tidy = TRUE)
-# volcano plot +/- RNase ChIP
-ggplot(wash_rnase_res, aes(x = log2FoldChange, y = -log10(pvalue))) +
-  geom_point()
-# saving
-ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/wash_rnase_volcano.pdf")
-```
-
-# rnase_wash_vs_input
-```{r}
-# getting the counts matrix from feature counts output
-counts_matrix <- ctcf_feature_counts$counts
-# ChIP +/- comparison
-samples_wash_rnase_input <- sample_df %>%
-  filter(condition %in% c("rnase_wash", "input"))
-# subsetting counts matrix
-wash_rnase_input_count_matrix <- counts_matrix[, samples_wash_rnase_input$filename]
-# factoring for deseq (+rnase/-rnase)
-samples_wash_rnase_input <- samples_wash_rnase_input %>%
-  mutate(condition = factor(condition, levels = c("input", "rnase_wash")))
-# Deseq
-dds_wash_rnase_input <-
-  DESeqDataSetFromMatrix(countData = wash_rnase_input_count_matrix,
-                         colData = samples_wash_rnase_input,
-                         design = ~ condition)
-# Running Deseq
-dds_wash_rnase_input <- DESeq(dds_wash_rnase_input)
-# getting names
-resultsNames(dds_wash_rnase_input)
-# filter out intercept results
-wash_rnase_input_res <-
-  results(dds_wash_rnase_input, name = "condition_rnase_wash_vs_input", tidy = TRUE)
-```
-
-
-
 # ChIP +/- Rnase comparison
 # Subselecting Deseq results from three conditions:
 (i) RNase-chip -vs- chip
@@ -316,7 +251,7 @@ chip_rnase_data <- chip_rnase_data %>%
 # chaging row to GeneID to merge with SAF
 colnames(chip_rnase_data)[1] <- "GeneID"
 # merging with CTCF SAF to get peak coordinates
-chip_rnase_data <- left_join(chip_rnase_data, ctcf_saf)
+chip_rnase_data <- left_join(chip_rnase_data, rpb1_saf)
 # actually plotting
 ggplot(chip_rnase_data, aes(x = l2fc_chip_vs_input, y = l2fc_rnase_vs_input, color = sig)) +
   geom_point() +
@@ -326,81 +261,66 @@ ggplot(chip_rnase_data, aes(x = l2fc_chip_vs_input, y = l2fc_rnase_vs_input, col
   geom_smooth(aes(group =1), method = "lm")
 # TODO why this doesn't make nice colors :)
 theme_paperwhite()
-ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/CTCF_rchip_result.pdf")
+ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/2023_03_14_Attempt2/CTCF_rchip_result.pdf")
 ```
 
 
-# chip vs rnase_wash condition
-# Plotting log2FC rnase_wash/input, vs chip/input color = sig wash_rnase/chip
-```{r chip vs rnase_wash}
-chip_wash_rnase_data <- wash_rnase_res %>%
-  dplyr::select(row, log2FoldChange, pvalue) %>%
-  dplyr::rename(l2fc_wash_rnase_vs_chip = log2FoldChange,
-                pvalue_wash_rnase_vs_chip = pvalue) %>%
-  left_join(chip_input_res %>%
-              dplyr::select(row, log2FoldChange, padj) %>%
-              dplyr::rename(l2fc_chip_vs_input = log2FoldChange,
-                            padj_chip_vs_input = padj)) %>%
-  left_join(wash_rnase_input_res %>%
-              dplyr::select(row, log2FoldChange, padj) %>%
-              dplyr::rename(l2fc_wash_rnase_vs_input = log2FoldChange,
-                            padj_wash_rnase_vs_input = padj))
-# creating a significant col with mutate
-chip_wash_rnase_data <- chip_wash_rnase_data %>%
-  mutate(sig = pvalue_wash_rnase_vs_chip <= 0.05)
-# chaging row to GeneID to merge with SAF
-colnames(chip_wash_rnase_data)[1] <- "GeneID"
-# merging with CTCF SAF to get peak coordinates
-chip_wash_rnase_data <- left_join(chip_wash_rnase_data, ctcf_saf)
-# actually plotting
-ggplot(chip_wash_rnase_data, aes(x = l2fc_chip_vs_input, y = l2fc_wash_rnase_vs_input, color = sig)) +
-  geom_point() +
-  geom_hline(yintercept = 0) +
-  geom_vline(xintercept = 0) +
-  geom_abline(slope = 1) +
-  geom_smooth(aes(group = 1), method = "lm") +
-  stat_regline_equation(aes(group = 1))
-ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/wash_rnase_vs_chip.pdf")
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(stringsAsFactors = F)
+library(GenomicRanges)
+library(dplyr)
+library(readr)
+# library(Gviz)
+library(IRanges)
+source("/scratch/Shares/rinn/tenaya/util/intersect_functions.R")
+source("/scratch/Shares/rinn/tenaya/util/plotting_functions.R")
+library(valr)
 ```
 
-# taking trend line from RNase vs chip adn wash-rnase vs chip on same plot
+#promoters
 ```{r}
-ggplot(chip_wash_rnase_data, aes(x = l2fc_chip_vs_input, y = l2fc_wash_rnase_vs_input)) +
-  geom_smooth(aes(group = 1), method = "lm") +
-  geom_smooth(aes(x = l2fc_chip_vs_input, y = l2fc_rnase_vs_input, group = 1), method = "lm", data = chip_rnase_data, color = "green") +
-  geom_abline(slope = 1) +
-  stat_regline_equation(aes(x = l2fc_chip_vs_input, y = l2fc_rnase_vs_input, group = 1), data = chip_rnase_data, label.y = 2, color = "green") +
-  stat_cor(aes(x = l2fc_chip_vs_input, y = l2fc_rnase_vs_input, group = 1), data = chip_rnase_data, label.y = 2, color = "green", label.x = 0)+
-  stat_cor(aes(x = l2fc_chip_vs_input, y = l2fc_wash_rnase_vs_input), data = chip_wash_rnase_data, color = "blue", label.x = 0) +
-  stat_regline_equation(aes(x = l2fc_chip_vs_input, y = l2fc_wash_rnase_vs_input), data = chip_wash_rnase_data, color = "blue") +
-  geom_hline(yintercept = 0) +
-  geom_vline(xintercept = 0) +
-  geom_point(alpha = 0.01, color = "blue") +
-  geom_point(aes(x = l2fc_chip_vs_input, y = l2fc_rnase_vs_input, group = 1), data = chip_rnase_data, color = "green", alpha = 0.01) +
-  xlim(-3,3) +
-  ylim(-3,3)
-ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/CTCF_all_reps_wash_RNase.pdf")
+# First we need promoters let's make them quick: (actually takes 5 min or so)
+gencode_gr <- rtracklayer::import("/scratch/Shares/rinn/genomes/Homo_sapiens/Gencode/v32/gencode.v32.annotation.gtf")
+# create promoters 
+promoters <- promoters(gencode_gr[gencode_gr$type == "gene"], upstream = 1000, downstream = 1000) 
+
 ```
 
-# alternative method
 
+
+# RBP1
+Trying RBP1 as comparison
 ```{r}
-chip_rnase_lm <- lm(l2fc_rnase_vs_input ~ l2fc_chip_vs_input, data = chip_rnase_data)
-wash_chip_rnase_lm <- lm(l2fc_wash_rnase_vs_input ~ l2fc_chip_vs_input, data = chip_wash_rnase_data)
-rnase_slope <- chip_rnase_lm$coefficients[[2]]
-rnase_intercept <- chip_rnase_lm$coefficients[[1]]
-wash_slope <- wash_chip_rnase_lm$coefficients[[2]]
-wash_intercept <- wash_chip_rnase_lm$coefficients[[1]]
-ggplot(chip_wash_rnase_data, aes(x = l2fc_chip_vs_input, y = l2fc_wash_rnase_vs_input)) +
-  geom_abline(slope = 1) +
-  geom_hline(yintercept = 0) +
-  geom_vline(xintercept = 0) +
-  geom_point(alpha = 0.01, color = "blue") +
-  geom_point(aes(x = l2fc_chip_vs_input, y = l2fc_rnase_vs_input, group = 1), data = chip_rnase_data, color = "green", alpha = 0.01) +
-  # Add the fitted trend lines
-  geom_abline(slope = rnase_slope, intercept = rnase_intercept, color = "green", size = 1.5) +
-  geom_abline(slope = wash_slope, intercept = wash_intercept, color = "blue", size = 1.5) +
-  annotate(geom = "text", x = -2, y = 1, label = paste0("y = ", round(rnase_intercept,3), " + ", round(rnase_slope,2),"x"), color = "green") +
-  annotate(geom = "text", x = -2, y = 2, label = paste0("y = ", round(wash_intercept,3), " + ", round(wash_slope,2),"x"), color = "blue")
-ggsave("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2023_02_23_CTCFfromJun2022/cleaner_all_ctcf replicates.pdf")
+# loading in peak file
+RBP1_peaks <- rtracklayer::import("/scratch/Shares/rinn/JR/rchip/data/1-2-2_nextflow_run_all_samples/results/bwa/mergedLibrary/macs/broadPeak/RBP1_no_rnase_R1_peaks.broadPeak")
+RBP1_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+# running profile TSS 
+RBP1_metaplot_df <- profile_tss(RBP1_peaks , promoters)
+# plotting metaplot
+ggplot(RBP1_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+```
+#from the Oct 2022 Data - RPB1 No Rnase Replicate 1
+```{r}
+# loading in peak file
+RBP1_peaks <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_NoR_R1_peaks.broadPeak")
+RBP1_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+# running profile TSS 
+RBP1_metaplot_df <- profile_tss(RBP1_peaks , promoters)
+# plotting metaplot
+ggplot(RBP1_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
+```
+
+#from the Oct 2022 Data - RPB1 No Rnase Replicate 2
+```{r}
+# loading in peak file
+RBP1_peaks <- rtracklayer::import("/scratch/Shares/rinn/tenaya/rChIP/rChIP/2022_10_04_RPB1/results/bwa/mergedLibrary/macs/broadPeak/RPB1_NoR_R2_peaks.broadPeak")
+RBP1_metaplot_df <- data.frame(x = integer(), dens = numeric(), dbp = character())
+# running profile TSS 
+RBP1_metaplot_df <- profile_tss(RBP1_peaks , promoters)
+# plotting metaplot
+ggplot(RBP1_metaplot_df, aes(x = x, y = dens)) + 
+  geom_line(size = 1.5)
 ```
